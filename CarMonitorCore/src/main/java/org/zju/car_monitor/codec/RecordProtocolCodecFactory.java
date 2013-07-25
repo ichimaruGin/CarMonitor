@@ -16,12 +16,10 @@ public class RecordProtocolCodecFactory implements ProtocolCodecFactory{
     public RecordProtocolCodecFactory() {
         decoder = new DataDecoder();
     }
-    @Override
     public ProtocolEncoder getEncoder(IoSession ioSession) throws Exception {
         throw new UnsupportedOperationException("no encoder defined");
     }
 
-    @Override
     public ProtocolDecoder getDecoder(IoSession ioSession) throws Exception {
         return decoder;
     }

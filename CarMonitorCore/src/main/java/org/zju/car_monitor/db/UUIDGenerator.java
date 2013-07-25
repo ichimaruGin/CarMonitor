@@ -11,7 +11,6 @@ import java.util.UUID;
  * @author jiezhen 7/17/13
  */
 public class UUIDGenerator implements IdentifierGenerator {
-    @Override
     public Serializable generate(SessionImplementor sessionImplementor, Object o) throws HibernateException {
         return UUID.randomUUID().toString();
     }

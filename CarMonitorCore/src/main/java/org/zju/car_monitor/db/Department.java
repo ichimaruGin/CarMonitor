@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "departments")
 public class Department extends DbObject {
 
-    @Column(name = "parentId")
+    @Column(name = "parent_id")
     String parentId = null;
 
     @Column(name = "name")

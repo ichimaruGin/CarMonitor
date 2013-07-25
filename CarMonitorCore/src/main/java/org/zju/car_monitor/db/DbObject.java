@@ -53,12 +53,12 @@ public abstract class DbObject {
     @Type(type = "date")
     Date updatedAt = null;
 
-    public void save() {
-        Hibernate.currentSession().save(this);
+    public String save() {
+        return (String)Hibernate.currentSession().save(this);
     }
 
     public void saveOrUpdate() {
-        Hibernate.currentSession().saveOrUpdate(this);
+         Hibernate.currentSession().saveOrUpdate(this);
     }
 
     public void delete() {

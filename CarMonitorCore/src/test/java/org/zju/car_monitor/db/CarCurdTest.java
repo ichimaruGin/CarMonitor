@@ -16,34 +16,37 @@ public class CarCurdTest{
 
     @Test
     public void testCarInsert() {
+        final Terminal terminal = new Terminal();
+        terminal.setTerminalId("00001");
+        terminal.setAlcoholLimit(200);
+        terminal.setWaterTempLimit(100);
+        terminal.setSpeedLimit(200);
+        terminal.setTiredDriveLimitMinutes(200);
+        terminal.setSamplingIntervalSeconds(5);
+        terminal.setSamplingDataUploadSeconds(5);
+        terminal.setTlWakeUpIntervalSeconds(10);
+        terminal.setIdleStatusUploadSeconds(100);
+        
+        Department department = (Department) Hibernate.readOnly(new ReadOnlyTask<Department>(){
+			public Department doWork() {
+				return Department.findAllDepartments().get(0);
+			}
+        });
+        
+        final Car car = new Car();
+        car.setRegNumber("浙AC687R");
+        car.setType("福克斯");
+        car.setDriverName("张三");
+        car.setDriverPhone("1367500000");
+        car.setDepartment(department);
+        car.setTerminal(terminal);
 
-//        final Terminal terminal = new Terminal();
-//        terminal.setAlcoholLimit(200);
-//        terminal.setWaterTempLimit(100);
-//        terminal.setSpeedLimit(200);
-//        terminal.setTiredDriveLimitMinutes(200);
-//        terminal.setSamplingIntervalSeconds(5);
-//        terminal.setSamplingDataUploadSeconds(5);
-//        terminal.setTlWakeUpIntervalSeconds(10);
-//        terminal.setIdleStatusUploadSeconds(100);
-//
-//        final Car car = new Car();
-//        car.setRegNumber("浙AC687R");
-//        car.setType("福克斯");
-//        car.setDriverName("张三");
-//        car.setDriverPhone("1367500000");
-//        car.setDepartment("浙江武警");
-//        car.setDivision("杭州中队");
-//        car.setBranch("西湖大队");
-//        car.setTerminal(terminal);
-//
-//        Hibernate.readWrite(new ReadWriteTask() {
-//            @Override
-//            public void doWork() {
-//                terminal.save();
-//                car.save();
-//            }
-//        });
+        Hibernate.readWrite(new ReadWriteTask() {
+            public void doWork() {
+                terminal.save();
+                car.save();
+            }
+        });
     }
 
 }

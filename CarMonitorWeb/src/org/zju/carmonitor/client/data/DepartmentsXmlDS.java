@@ -30,14 +30,15 @@ public class DepartmentsXmlDS extends DataSource {
 
         DataSourceTextField itemNameField = new DataSourceTextField("name", "Item", 128, true);
 
-        DataSourceTextField parentField = new DataSourceTextField("parentID", null);
+        DataSourceTextField parentField = new DataSourceTextField("parentId", null);
         parentField.setHidden(true);
         parentField.setRequired(true);
         parentField.setRootValue("root");
-        parentField.setForeignKey("departmentsXmlDS.parentId");
+        parentField.setForeignKey("departmentsXmlDS.id");
 
-        setFields(itemNameField, parentField);
-
+        setFields(idField, itemNameField, parentField);
+        
+        //setDataURL("ds/test_data/supplyCategory.data.xml");
         setDataURL(GWT.getModuleBaseURL()+"xmlservlet?param=departments");
 
         setClientOnly(true);

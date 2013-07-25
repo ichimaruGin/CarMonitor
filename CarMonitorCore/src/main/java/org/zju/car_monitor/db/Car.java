@@ -1,7 +1,5 @@
 package org.zju.car_monitor.db;
 
-import org.zju.car_monitor.util.Hibernate;
-
 import javax.persistence.*;
 
 /**
@@ -11,7 +9,16 @@ import javax.persistence.*;
 @Table(name = "cars")
 public class Car extends DbObject {
 
-    @Column(name = "reg_number")
+    public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+
+	@Column(name = "reg_number")
     String regNumber = null;
 
     @Column(name = "type")
@@ -27,15 +34,11 @@ public class Car extends DbObject {
     @JoinColumn(name = "terminal_id")
     Terminal terminal = null;
 
-    @Column(name = "department")
-    String department = null;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id")
+    Department department = null;
 
-    @Column(name = "division")
-    String division = null;
-
-    @Column(name = "branch")
-    String branch = null;
-
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "map_id")
     Map map = null;
@@ -60,18 +63,7 @@ public class Car extends DbObject {
         this.terminal = terminal;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
-    public void setDivision(String division) {
-        this.division = division;
-    }
-
-    public void setBranch(String branch) {
-        this.branch = branch;
-    }
-
+    
     public void setMap(Map map) {
         this.map = map;
     }

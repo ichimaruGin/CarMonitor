@@ -1,4 +1,5 @@
-  drop database if exists `car_monitor_db`;
+set charset "utf8";
+drop database if exists `car_monitor_db`;
 create database `car_monitor_db` character set utf8 collate utf8_unicode_ci;
 create user `car_db_user`@`localhost` IDENTIFIED by 'password';
 grant all on `car_monitor_db`.* to `car_db_user`@`localhost`;

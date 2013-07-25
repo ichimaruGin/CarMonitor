@@ -24,7 +24,6 @@ public final class EventProcessor {
         final EventType eventType = EventType.valueOf(header);
         final String body = event.substring(8);
         Hibernate.readWrite(new ReadWriteTask() {
-            @Override
             public void doWork() {
                 switch (eventType) {
                     case CAT718: decodeAndSaveCAT718(body);
@@ -52,15 +51,15 @@ public final class EventProcessor {
         terminalEvent.setProcessFlag("N");
         terminalEvent.save();
 
-        saveLongAttrValue(terminalEvent, strToLongValue(values[1]), CAT718EventAttribute.carWaterTempAttribute);
-        saveLongAttrValue(terminalEvent, strToLongValue(values[2]), CAT718EventAttribute.carOilAttribute);
-        saveLongAttrValue(terminalEvent, strToLongValue(values[3]), CAT718EventAttribute.carSpeedAttribute);
-        saveLongAttrValue(terminalEvent, strToLongValue(values[4]), CAT718EventAttribute.carRpmAttribute);
+        saveLongAttrValue(terminalEvent, strToLongValue(values[1]), CAT718EventAttribute.carWaterTempAttribute());
+        saveLongAttrValue(terminalEvent, strToLongValue(values[2]), CAT718EventAttribute.carOilAttribute());
+        saveLongAttrValue(terminalEvent, strToLongValue(values[3]), CAT718EventAttribute.carSpeedAttribute());
+        saveLongAttrValue(terminalEvent, strToLongValue(values[4]), CAT718EventAttribute.carRpmAttribute());
 
         //saveLongAttrValue(terminalEvent, strToLongValue(values[5]), CAT718EventAttribute.drunkDriveAttribute);
-        saveCharAttrValue(terminalEvent, (values[6]), CAT718EventAttribute.tiedDriveStateAttribute);
-        saveCharAttrValue(terminalEvent, (values[7]), CAT718EventAttribute.carLatitudeAttribute);
-        saveCharAttrValue(terminalEvent, (values[7]), CAT718EventAttribute.carLongitudeAttribute);
+        saveCharAttrValue(terminalEvent, (values[6]), CAT718EventAttribute.tiedDriveStateAttribute());
+        saveCharAttrValue(terminalEvent, (values[7]), CAT718EventAttribute.carLatitudeAttribute());
+        saveCharAttrValue(terminalEvent, (values[7]), CAT718EventAttribute.carLongitudeAttribute());
         // skip the last reserved field
     }
 
