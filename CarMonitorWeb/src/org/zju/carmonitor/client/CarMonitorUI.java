@@ -5,12 +5,9 @@ import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.types.VisibilityMode;
 import com.smartgwt.client.util.SC;
-import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.ImgButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
-import com.smartgwt.client.widgets.events.HoverEvent;
-import com.smartgwt.client.widgets.events.HoverHandler;
 import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
 import com.smartgwt.client.widgets.form.fields.FilterCriteriaFunction;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
@@ -23,10 +20,11 @@ import com.smartgwt.client.widgets.menu.MenuItem;
 import com.smartgwt.client.widgets.menu.events.MenuItemClickEvent;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.smartgwt.client.widgets.tree.events.NodeClickHandler;
+import org.zju.carmonitor.client.data.DepartmentsXmlDS;
 
 public class CarMonitorUI extends HLayout implements EntryPoint {
     private SearchForm searchForm;
-    private CategoryTreeGrid categoryTree;
+    private DepartmentsTreeGrid departmentsTreeGrid;
     private ItemListGrid itemList;
     private ItemDetailTabPane itemDetailTabPane;
     private Menu itemListMenu;
@@ -36,12 +34,12 @@ public class CarMonitorUI extends HLayout implements EntryPoint {
         setHeight100();
         setLayoutMargin(20);
 
-        DataSource supplyCategoryDS = CategoriesXmlDS.getInstance();
+        DataSource departmentsXmlDS = DepartmentsXmlDS.getInstance();
         DataSource supplyItemDS = ItemSupplyXmlDS.getInstance();
 
-        categoryTree = new CategoryTreeGrid(supplyCategoryDS);
-        categoryTree.setAutoFetchData(true);
-        categoryTree.addNodeClickHandler(new NodeClickHandler() {
+        departmentsTreeGrid = new DepartmentsTreeGrid(departmentsXmlDS);
+        departmentsTreeGrid.setAutoFetchData(true);
+        departmentsTreeGrid.addNodeClickHandler(new NodeClickHandler() {
             public void onNodeClick(NodeClickEvent event) {
                 String category = event.getNode().getAttribute("categoryName");
                 findItems(category);
@@ -54,7 +52,7 @@ public class CarMonitorUI extends HLayout implements EntryPoint {
         final ComboBoxItem itemNameCB = searchForm.getItemNameField();
         itemNameCB.setPickListFilterCriteriaFunction(new FilterCriteriaFunction() {
             public Criteria getCriteria() {
-                ListGridRecord record = categoryTree.getSelectedRecord();
+                ListGridRecord record = departmentsTreeGrid.getSelectedRecord();
                 if ((itemNameCB.getValue() != null) && record != null) {
                     Criteria criteria = new Criteria();
                     criteria.addCriteria("category", record.getAttribute("categoryName"));
@@ -96,7 +94,7 @@ public class CarMonitorUI extends HLayout implements EntryPoint {
         SectionStackSection suppliesCategorySection = new SectionStackSection("车辆所属单位");
         suppliesCategorySection.setExpanded(true);
         suppliesCategorySection.setCanCollapse(false);
-        suppliesCategorySection.setItems(categoryTree);
+        suppliesCategorySection.setItems(departmentsTreeGrid);
 
         ImgButton addButton = new ImgButton();
         addButton.setSrc("[SKIN]actions/add.png");
@@ -139,7 +137,7 @@ public class CarMonitorUI extends HLayout implements EntryPoint {
         supplyItemsSection.setExpanded(true);
         supplyItemsSection.setCanCollapse(false);
 
-        itemDetailTabPane = new ItemDetailTabPane(supplyItemDS, supplyCategoryDS, itemList);
+        itemDetailTabPane = new ItemDetailTabPane(supplyItemDS, departmentsXmlDS, itemList);
         SectionStackSection itemDetailsSection = new SectionStackSection("车辆详细信息");
         itemDetailsSection.setItems(itemDetailTabPane);
         itemDetailsSection.setExpanded(true);
@@ -189,7 +187,7 @@ public class CarMonitorUI extends HLayout implements EntryPoint {
         Criteria findValues;
 
         String formValue = searchForm.getValueAsString("findInCategory");
-        ListGridRecord selectedCategory = categoryTree.getSelectedRecord();
+        ListGridRecord selectedCategory = departmentsTreeGrid.getSelectedRecord();
         if (formValue != null && selectedCategory != null) {
             categoryName = selectedCategory.getAttribute("categoryName");
             findValues = searchForm.getValuesAsCriteria();
@@ -203,7 +201,7 @@ public class CarMonitorUI extends HLayout implements EntryPoint {
         }
 
         itemList.filterData(findValues);
-        itemDetailTabPane.clearDetails(categoryTree.getSelectedRecord());
+        itemDetailTabPane.clearDetails(departmentsTreeGrid.getSelectedRecord());
     }
 
 }

@@ -9,8 +9,19 @@
     <servlet-name>CarMonitorUI CarMonitorUIService</servlet-name>
     <servlet-class>org.zju.carmonitor.server.CarMonitorUIServiceImpl</servlet-class>
 </servlet>
+
+    <servlet>
+        <servlet-name>XmlServlet</servlet-name>
+        <servlet-class>org.zju.carmonitor.server.XmlServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>CarMonitorUI CarMonitorUIService</servlet-name>
         <url-pattern>/CarMonitorUI/CarMonitorUIService</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>XmlServlet</servlet-name>
+        <url-pattern>/CarMonitorUI/xmlservlet</url-pattern>
     </servlet-mapping>
 </web-app>

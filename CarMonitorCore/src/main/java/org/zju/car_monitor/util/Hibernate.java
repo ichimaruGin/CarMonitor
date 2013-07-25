@@ -37,14 +37,14 @@ public class Hibernate {
         }
     }
 
-    public static void readOnly (ReadOnlyTask task) {
+    public static void readOnly(Object holder, ReadOnlyTask task) {
         Session session = null;
         Transaction transaction = null;
         try{
             session = getSession();
             localSession.set(session);
             transaction = session.beginTransaction();
-            task.doWork();
+            holder = task.doWork();
         } catch (Exception ex) {
           ex.printStackTrace();
         } finally {

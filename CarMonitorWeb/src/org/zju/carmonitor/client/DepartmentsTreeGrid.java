@@ -7,9 +7,9 @@ import com.smartgwt.client.widgets.tree.TreeGrid;
 /**
  * @author jiezhen 7/23/13
  */
-public class CategoryTreeGrid extends TreeGrid {
+public class DepartmentsTreeGrid extends TreeGrid {
 
-    public CategoryTreeGrid(DataSource supplyCategoryDS) {
+    public DepartmentsTreeGrid(DataSource departmentDS) {
 
         setShowHeader(false);
         setLeaveScrollbarGap(false);
@@ -17,6 +17,6 @@ public class CategoryTreeGrid extends TreeGrid {
         setCanAcceptDroppedRecords(true);
         setCanReparentNodes(false);
         setSelectionType(SelectionStyle.SINGLE);
-        setDataSource(supplyCategoryDS);
+        setDataSource(departmentDS);
     }
 }

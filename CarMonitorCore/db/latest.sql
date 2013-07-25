@@ -3,6 +3,25 @@ create database `car_monitor_db` character set utf8 collate utf8_unicode_ci;
 create user `car_db_user`@`localhost` IDENTIFIED by 'password';
 grant all on `car_monitor_db`.* to `car_db_user`@`localhost`;
 use `car_monitor_db`;
+drop table if exists `departments`;
+create table `departments` (
+  `id` char(36) COLLATE utf8_unicode_ci NOT NULL,
+  `parent_id` char(36) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+insert into departments values ('b58f6085-c8af-4592-9894-08d19c191345', 'b58f6085-c8af-4592-9894-08d19c191345', '武警总部', null, null);
+insert into departments values ('523a6c45-7e57-410d-8a38-09e0d5a3cc06', 'b58f6085-c8af-4592-9894-08d19c191345', '浙江总队', null, null);
+insert into departments values ('ee900c15-7b04-4fda-a687-44e9f6ff96a2', 'b58f6085-c8af-4592-9894-08d19c191345', '贵州总队', null, null);
+insert into departments values ('413725c9-3fdc-4f04-830d-ac7f4350db34', '523a6c45-7e57-410d-8a38-09e0d5a3cc06', '杭州支队', null, null);
+insert into departments values ('0156c73a-4f4c-401e-8ebe-169f7f9c0f75', '413725c9-3fdc-4f04-830d-ac7f4350db34', '西湖中队', null, null);
+insert into departments values ('3dc0189a-5453-431e-8ba8-032cf6532c68', '413725c9-3fdc-4f04-830d-ac7f4350db34', '拱墅中队', null, null);
+insert into departments values ('dd55e56b-8ddb-43d7-8f7f-776afd1682e7', '413725c9-3fdc-4f04-830d-ac7f4350db34', '滨江中队', null, null);
+insert into departments values ('38c867d0-3d57-452f-8297-a0d83804ae4c', '413725c9-3fdc-4f04-830d-ac7f4350db34', '下城中队', null, null);
+
 drop table if exists `cars`;
 create table `cars` (
   `id` char(36) COLLATE utf8_unicode_ci NOT NULL,
@@ -10,17 +29,15 @@ create table `cars` (
   `type` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
   `driver_name` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
   `driver_phone` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
+  `department_id` char(36) COLLATE utf8_unicode_ci DEFAULT NULL,
   `terminal_id` char(36) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `department` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
-  `division` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `branch` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
   `map_id` char(36) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-insert into cars values ('68f230af-9e45-4a49-b8cd-018aa710356e', '浙AC687R', '福克斯','张三', '1367500000', 'd3f8d7e0-784f-41cb-8f15-b57c528971f9', '武警浙江总队', '杭州中队', '西湖支队', null, null, null);
+insert into cars values ('68f230af-9e45-4a49-b8cd-018aa710356e', '浙AC687R', '福克斯','张三', '1367500000', '3dc0189a-5453-431e-8ba8-032cf6532c68', 'd3f8d7e0-784f-41cb-8f15-b57c528971f9', null, null, null);
 
 drop table if exists `terminals`;
 create table `terminals` (

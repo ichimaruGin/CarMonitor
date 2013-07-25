@@ -37,9 +37,9 @@ public class CAT718EventTest{
 
     @Test
     public void testOneMessage() {
-        byte[] bytes = stringToByteArray(message);
-        Client client = new Client();
-        client.send(bytes);
+//        byte[] bytes = stringToByteArray(message);
+//        Client client = new Client();
+//        client.send(bytes);
     }
 
 }

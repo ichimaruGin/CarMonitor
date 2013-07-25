@@ -1,14 +1,16 @@
 package org.zju.carmonitor.server;
 
 import org.apache.log4j.Logger;
+import org.zju.car_monitor.db.Department;
+import org.zju.car_monitor.util.Hibernate;
+import org.zju.car_monitor.util.ReadOnlyTask;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author jiezhen 7/23/13
@@ -16,41 +18,42 @@ import java.util.Iterator;
 public class XmlServlet extends HttpServlet {
     private final Logger logger = Logger.getLogger(XmlServlet.class);
 
+    private String createDepartmentsXML() {
+        String xml = null;
+        Hibernate.readOnly(xml, new ReadOnlyTask<String>() {
+            @Override
+            public String doWork() {
+                List<Department> departments = Department.findAllDepartments();
+                StringBuilder sb = new StringBuilder();
+                sb.append("<List>");
+
+                for(Department department: departments) {
+                    sb.append("<department>");
+                    XmlUtil.pair("name", department.getName());
+                    XmlUtil.pair("id", department.getId());
+                    XmlUtil.pair("parentId", department.getParentId());
+                    sb.append("</department>");
+                }
+                sb.append("</List>");
+                return sb.toString();
+            }
+        });
+        return xml;
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         if (req != null){
             resp.setCharacterEncoding("UTF-8");
             String para = req.getParameter("param");
-            logger.debug("URL Param: " + para);
-//            ArrayList<ValueObject> voList = new ArrayList<ValueObject>();
-//            switch (URL_PARAM.valueOf(para)){
-//                case COMPANY_URL_PARAM: voList = cashierComDaoImpl.getAllCashierCompany(); break;
-//                case CASHIER_URL_PARAM: voList = cashierDaoImpl.getAllCashier(); break;
-//                case CASH_URL_PARAM: voList = cashDaoImpl.getAllCash(); break;
-//                case BRAND_URL_PARAM: voList = cashierBrandDaoImpl.getAllCashierBrand(); break;
-//                default: logger.debug("Unrecognized url :"+para);
-//            }
-//            resp.getWriter().write(transVoListToString(voList));
+            logger.info("URL Param: " + para);
+            if (para == "departments") {
+                resp.getWriter().write(createDepartmentsXML());
+            } else {
+                logger.error("error match param");
+            }
             resp.flushBuffer();
         }
     }
-
-//    private String transVoListToString(ArrayList<ValueObject> list){
-//        StringBuilder sb = new StringBuilder();
-//        if (list != null && list.size() > 0){
-//            sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-//            sb.append("<List>");
-//            for (Iterator<ValueObject> iter = list.iterator(); iter.hasNext();){
-//                ValueObject vo = iter.next();
-//                sb.append("<Record>");
-//                sb.append(vo.toXML());
-//                logger.debug(vo.toXML());
-//                sb.append("</Record>");
-//            }
-//        }
-//        sb.append("</List>");
-//        return sb.toString();
-//
-//    }
 }
