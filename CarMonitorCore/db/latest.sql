@@ -9,19 +9,20 @@ create table `departments` (
   `id` char(36) COLLATE utf8_unicode_ci NOT NULL,
   `parent_id` char(36) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `long_name` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-insert into departments values ('b58f6085-c8af-4592-9894-08d19c191345', 'b58f6085-c8af-4592-9894-08d19c191345', '武警总部', null, null);
-insert into departments values ('523a6c45-7e57-410d-8a38-09e0d5a3cc06', 'b58f6085-c8af-4592-9894-08d19c191345', '浙江总队', null, null);
-insert into departments values ('ee900c15-7b04-4fda-a687-44e9f6ff96a2', 'b58f6085-c8af-4592-9894-08d19c191345', '贵州总队', null, null);
-insert into departments values ('413725c9-3fdc-4f04-830d-ac7f4350db34', '523a6c45-7e57-410d-8a38-09e0d5a3cc06', '杭州支队', null, null);
-insert into departments values ('0156c73a-4f4c-401e-8ebe-169f7f9c0f75', '413725c9-3fdc-4f04-830d-ac7f4350db34', '西湖中队', null, null);
-insert into departments values ('3dc0189a-5453-431e-8ba8-032cf6532c68', '413725c9-3fdc-4f04-830d-ac7f4350db34', '拱墅中队', null, null);
-insert into departments values ('dd55e56b-8ddb-43d7-8f7f-776afd1682e7', '413725c9-3fdc-4f04-830d-ac7f4350db34', '滨江中队', null, null);
-insert into departments values ('38c867d0-3d57-452f-8297-a0d83804ae4c', '413725c9-3fdc-4f04-830d-ac7f4350db34', '下城中队', null, null);
+insert into departments values ('b58f6085-c8af-4592-9894-08d19c191345', 'b58f6085-c8af-4592-9894-08d19c191345', '武警总部','武警总部', null, null);
+insert into departments values ('523a6c45-7e57-410d-8a38-09e0d5a3cc06', 'b58f6085-c8af-4592-9894-08d19c191345', '浙江总队','浙江总队', null, null);
+insert into departments values ('ee900c15-7b04-4fda-a687-44e9f6ff96a2', 'b58f6085-c8af-4592-9894-08d19c191345', '贵州总队','贵州总队', null, null);
+insert into departments values ('413725c9-3fdc-4f04-830d-ac7f4350db34', '523a6c45-7e57-410d-8a38-09e0d5a3cc06', '杭州支队','浙江总队杭州支队', null, null);
+insert into departments values ('0156c73a-4f4c-401e-8ebe-169f7f9c0f75', '413725c9-3fdc-4f04-830d-ac7f4350db34', '西湖中队','浙江总队杭州支队西湖中队', null, null);
+insert into departments values ('3dc0189a-5453-431e-8ba8-032cf6532c68', '413725c9-3fdc-4f04-830d-ac7f4350db34', '拱墅中队','浙江总队杭州支队拱墅中队', null, null);
+insert into departments values ('dd55e56b-8ddb-43d7-8f7f-776afd1682e7', '413725c9-3fdc-4f04-830d-ac7f4350db34', '滨江中队','浙江总队杭州支队滨江中队', null, null);
+insert into departments values ('38c867d0-3d57-452f-8297-a0d83804ae4c', '413725c9-3fdc-4f04-830d-ac7f4350db34', '下城中队','浙江总队杭州支队下城中队', null, null);
 
 drop table if exists `cars`;
 create table `cars` (
@@ -54,6 +55,7 @@ create table `terminals` (
   `idle_status_upload_seconds` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
+  UNIQUE KEY `terminal_id_uk` (`terminal_id`),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

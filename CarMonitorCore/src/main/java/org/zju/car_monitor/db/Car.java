@@ -1,6 +1,10 @@
 package org.zju.car_monitor.db;
 
+import java.util.List;
+
 import javax.persistence.*;
+
+import org.zju.car_monitor.util.Hibernate;
 
 /**
  * @author jiezhen 7/17/13
@@ -9,7 +13,31 @@ import javax.persistence.*;
 @Table(name = "cars")
 public class Car extends DbObject {
 
-    public Department getDepartment() {
+    public String getRegNumber() {
+		return regNumber;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public String getDriverName() {
+		return driverName;
+	}
+
+	public String getDriverPhone() {
+		return driverPhone;
+	}
+
+	public Terminal getTerminal() {
+		return terminal;
+	}
+
+	public Map getMap() {
+		return map;
+	}
+
+	public Department getDepartment() {
 		return department;
 	}
 
@@ -68,6 +96,8 @@ public class Car extends DbObject {
         this.map = map;
     }
 
-
+    public static List<Car> findAllCars() {
+    	return Hibernate.currentSession().createCriteria(Car.class).list();
+    }
 
 }

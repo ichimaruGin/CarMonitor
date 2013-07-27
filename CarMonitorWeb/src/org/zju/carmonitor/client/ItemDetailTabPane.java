@@ -25,9 +25,9 @@ public class ItemDetailTabPane extends TabSet {
     private DetailViewer itemViewer;
     private DynamicForm editorForm;
     private Label editorLabel;
-    private ItemListGrid itemListGrid;
+    private CarListGrid itemListGrid;
 
-    public ItemDetailTabPane(DataSource supplyItemDS, DataSource supplyCategoryDS, ItemListGrid itemListGrid) {
+    public ItemDetailTabPane(DataSource supplyItemDS, DataSource supplyCategoryDS, CarListGrid itemListGrid) {
         this.itemListGrid = itemListGrid;
         itemViewer = new DetailViewer();
         itemViewer.setDataSource(supplyItemDS);

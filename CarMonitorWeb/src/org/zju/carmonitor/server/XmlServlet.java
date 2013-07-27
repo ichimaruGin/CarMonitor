@@ -1,6 +1,7 @@
 package org.zju.carmonitor.server;
 
 import org.apache.log4j.Logger;
+import org.zju.car_monitor.db.Car;
 import org.zju.car_monitor.db.Department;
 import org.zju.car_monitor.util.Hibernate;
 import org.zju.car_monitor.util.ReadOnlyTask;
@@ -9,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -19,6 +21,31 @@ import java.util.List;
 public class XmlServlet extends HttpServlet {
     private final Logger logger = Logger.getLogger(XmlServlet.class);
 
+    private String createCarsXML() {
+    	return (String) Hibernate.readOnly(new ReadOnlyTask<String>(){
+
+			public String doWork() {
+				List<Car> cars = Car.findAllCars();
+				StringBuilder sb = new StringBuilder();
+				sb.append("<List>");
+				for (Car car: cars) {
+					sb.append("<car>");
+					sb.append(XmlUtil.pair("departmentName", car.getDepartment().getLongName()));
+					sb.append(XmlUtil.pair("terminalId", car.getTerminal().getTerminalId()));
+					sb.append(XmlUtil.pair("driverName",car.getDriverName()));
+					sb.append(XmlUtil.pair("driverPhone",car.getDriverPhone()));
+					sb.append(XmlUtil.pair("carType", car.getType()));
+					sb.append(XmlUtil.pair("carRegNumber", car.getRegNumber()));
+					sb.append("</car>");
+				}
+				sb.append("</List>");
+				
+				return sb.toString();
+			}
+    		
+    	});
+    }
+    
     private String createDepartmentsXML() {
         String xml = (String) Hibernate.readOnly(new ReadOnlyTask<String>() {
             public String doWork() {
@@ -55,10 +82,13 @@ public class XmlServlet extends HttpServlet {
             logger.info("URL Param: " + para);
             if (para.equals("departments")) {
                 resp.getWriter().write(createDepartmentsXML());
-            } else {
+            } else if (para.equals("cars")) {
+            	resp.getWriter().write(createCarsXML());
+            } else{
                 logger.error("error match param");
             }
             resp.flushBuffer();
         }
     }
 }
+

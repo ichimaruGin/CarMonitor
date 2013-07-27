@@ -5,8 +5,10 @@ import org.hibernate.annotations.Type;
 import org.zju.car_monitor.util.Hibernate;
 
 import javax.persistence.*;
+
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author jiezhen 7/17/13
@@ -68,5 +70,5 @@ public abstract class DbObject {
     public void refresh() {
         Hibernate.currentSession().refresh(this);
     }
-
+    
 }

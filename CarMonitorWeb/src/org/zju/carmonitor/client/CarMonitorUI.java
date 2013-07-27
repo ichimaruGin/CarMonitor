@@ -25,37 +25,38 @@ import org.zju.carmonitor.client.data.DepartmentsXmlDS;
 public class CarMonitorUI extends HLayout implements EntryPoint {
     private SearchForm searchForm;
     private DepartmentsTreeGrid departmentsTreeGrid;
-    private ItemListGrid itemList;
+    private CarListGrid carList;
     private ItemDetailTabPane itemDetailTabPane;
     private Menu itemListMenu;
 
     public void onModuleLoad() {
         setWidth100();
         setHeight100();
-        setLayoutMargin(20);
-
+        setLayoutMargin(5);
+        
+        DataStoreFromServer.init();
         DataSource departmentsXmlDS = DepartmentsXmlDS.getInstance();
-        DataSource supplyItemDS = ItemSupplyXmlDS.getInstance();
+        DataSource carXmlDS = CarsXmlDS.getInstance();
 
         departmentsTreeGrid = new DepartmentsTreeGrid(departmentsXmlDS);
         departmentsTreeGrid.setAutoFetchData(true);
         departmentsTreeGrid.addNodeClickHandler(new NodeClickHandler() {
             public void onNodeClick(NodeClickEvent event) {
-                String category = event.getNode().getAttribute("categoryName");
-                findItems(category);
+                String departName = event.getNode().getAttribute("departmentName");
+                findItems(departName);
             }
         });
 
-        searchForm = new SearchForm(supplyItemDS);
+        searchForm = new SearchForm(carXmlDS);
 
         //when showing options in the combo-box, only show the options from the selected category if appropriate
-        final ComboBoxItem itemNameCB = searchForm.getItemNameField();
+        final ComboBoxItem itemNameCB = searchForm.getTerminalIdField();
         itemNameCB.setPickListFilterCriteriaFunction(new FilterCriteriaFunction() {
             public Criteria getCriteria() {
                 ListGridRecord record = departmentsTreeGrid.getSelectedRecord();
                 if ((itemNameCB.getValue() != null) && record != null) {
                     Criteria criteria = new Criteria();
-                    criteria.addCriteria("category", record.getAttribute("categoryName"));
+                    criteria.addCriteria("category", record.getAttribute("name"));
                     return criteria;
                 }
                 return null;
@@ -64,20 +65,20 @@ public class CarMonitorUI extends HLayout implements EntryPoint {
 
         setupContextMenu();
 
-        itemList = new ItemListGrid(supplyItemDS);
-        itemList.addRecordClickHandler(new RecordClickHandler() {
+        carList = new CarListGrid(carXmlDS);
+        carList.addRecordClickHandler(new RecordClickHandler() {
             public void onRecordClick(RecordClickEvent event) {
                 itemDetailTabPane.updateDetails();
             }
         });
 
-        itemList.addCellSavedHandler(new CellSavedHandler() {
+        carList.addCellSavedHandler(new CellSavedHandler() {
             public void onCellSaved(CellSavedEvent event) {
                 itemDetailTabPane.updateDetails();
             }
         });
 
-        itemList.addCellContextClickHandler(new CellContextClickHandler() {
+        carList.addCellContextClickHandler(new CellContextClickHandler() {
             public void onCellContextClick(CellContextClickEvent event) {
                 itemListMenu.showContextMenu();
                 event.cancel();
@@ -106,7 +107,8 @@ public class CarMonitorUI extends HLayout implements EntryPoint {
         addButton.addClickHandler(new ClickHandler() {
 
             public void onClick(ClickEvent event) {
-                SC.warn("clicked");
+                AddNewCarWindow addNewCarWindow = new AddNewCarWindow();
+                addNewCarWindow.show();
             }
         });
 
@@ -132,18 +134,18 @@ public class CarMonitorUI extends HLayout implements EntryPoint {
         findSection.setExpanded(true);
         findSection.setCanCollapse(false);
 
-        SectionStackSection supplyItemsSection = new SectionStackSection("车辆列表");
-        supplyItemsSection.setItems(itemList);
-        supplyItemsSection.setExpanded(true);
-        supplyItemsSection.setCanCollapse(false);
+        SectionStackSection carListSection = new SectionStackSection("车辆列表");
+        carListSection.setItems(carList);
+        carListSection.setExpanded(true);
+        carListSection.setCanCollapse(false);
 
-        itemDetailTabPane = new ItemDetailTabPane(supplyItemDS, departmentsXmlDS, itemList);
+        itemDetailTabPane = new ItemDetailTabPane(carXmlDS, departmentsXmlDS, carList);
         SectionStackSection itemDetailsSection = new SectionStackSection("车辆详细信息");
         itemDetailsSection.setItems(itemDetailTabPane);
         itemDetailsSection.setExpanded(true);
         itemDetailsSection.setCanCollapse(false);
 
-        rightSideLayout.setSections(findSection, supplyItemsSection, itemDetailsSection);
+        rightSideLayout.setSections(findSection, carListSection, itemDetailsSection);
 
         addMember(leftSideLayout);
         addMember(rightSideLayout);
@@ -173,7 +175,7 @@ public class CarMonitorUI extends HLayout implements EntryPoint {
         final MenuItem deleteMenuItem = new MenuItem("Delete Item", "silk/delete.png");
         deleteMenuItem.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {
             public void onClick(MenuItemClickEvent event) {
-                itemList.removeSelectedData();
+                carList.removeSelectedData();
                 itemDetailTabPane.clearDetails(null);
             }
         });
@@ -182,25 +184,23 @@ public class CarMonitorUI extends HLayout implements EntryPoint {
     }
 
 
-    public void findItems(String categoryName) {
+    public void findItems(String departmentName) {
 
         Criteria findValues;
 
-        String formValue = searchForm.getValueAsString("findInCategory");
-        ListGridRecord selectedCategory = departmentsTreeGrid.getSelectedRecord();
-        if (formValue != null && selectedCategory != null) {
-            categoryName = selectedCategory.getAttribute("categoryName");
+        String formValue = searchForm.getValueAsString("findInDepartment");
+        ListGridRecord selectedDepartment = departmentsTreeGrid.getSelectedRecord();
+        if (formValue != null && selectedDepartment != null) {
+            departmentName = selectedDepartment.getAttribute("name");
             findValues = searchForm.getValuesAsCriteria();
-            findValues.addCriteria("category", categoryName);
-
-        } else if (categoryName == null) {
+            findValues.addCriteria("departmentName", departmentName);
+        } else if (departmentName == null) {
             findValues = searchForm.getValuesAsCriteria();
         } else {
             findValues = new Criteria();
-            findValues.addCriteria("category", categoryName);
+            findValues.addCriteria("departmentName", departmentName);
         }
-
-        itemList.filterData(findValues);
+        carList.filterData(findValues);
         itemDetailTabPane.clearDetails(departmentsTreeGrid.getSelectedRecord());
     }
 

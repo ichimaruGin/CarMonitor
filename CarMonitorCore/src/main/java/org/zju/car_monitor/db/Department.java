@@ -1,10 +1,13 @@
 package org.zju.car_monitor.db;
 
+import org.apache.log4j.Logger;
+import org.hibernate.criterion.Restrictions;
 import org.zju.car_monitor.util.Hibernate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
 import java.util.List;
 
 /**
@@ -13,6 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "departments")
 public class Department extends DbObject {
+	private static Logger logger = Logger.getLogger(Department.class);
 
     @Column(name = "parent_id")
     String parentId = null;
@@ -20,9 +24,25 @@ public class Department extends DbObject {
     @Column(name = "name")
     String name = null;
 
-    public static List<Department> findAllDepartments() {
+    @Column(name = "long_name")
+    String longName = null;
+    
+    public String getLongName() {
+		return longName;
+	}
+
+	public void setLongName(String longName) {
+		this.longName = longName;
+	}
+
+	public static List<Department> findAllDepartments() {
         return Hibernate.currentSession().createCriteria(Department.class).list();
     }
+	
+	public static Department findDepartmentByLongName(String longName) {
+		logger.info("Getting department by long name " + longName);
+		return (Department)Hibernate.currentSession().createCriteria(Department.class).add(Restrictions.eq("longName", longName)).list().get(0);
+	}
 
     public String getParentId() {
         return parentId;

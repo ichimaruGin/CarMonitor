@@ -93,4 +93,8 @@ public class Terminal extends DbObject {
             throw new RuntimeException("Can't find terminal " + terminalId + " in database.");
         return (Terminal)terminals.get(0);
     }
+    
+    public static List<Terminal> findAll() {
+    	return (List<Terminal> )Hibernate.currentSession().createCriteria(Terminal.class).list();
+    }
 }

@@ -41,7 +41,7 @@ public class Hibernate {
             ex.printStackTrace();
         }
     }
-
+    
     public static Object readOnly(ReadOnlyTask task) {
         Session session = null;
         Transaction transaction = null;

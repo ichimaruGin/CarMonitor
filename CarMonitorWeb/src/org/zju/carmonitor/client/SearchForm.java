@@ -11,7 +11,7 @@ import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
 
 public class SearchForm extends com.smartgwt.client.widgets.form.SearchForm {
-    private ComboBoxItem itemName;
+    private ComboBoxItem terminalIdBoxItem;
     private ButtonItem findItem;
 
 
@@ -23,27 +23,27 @@ public class SearchForm extends com.smartgwt.client.widgets.form.SearchForm {
         setNumCols(7);
   //      setStyleName("defaultBorder");
 
-        findItem = new ButtonItem("Find");
-//        findItem.setIcon("silk/find.png");
+        findItem = new ButtonItem("查找");
+        findItem.setIcon("find.png");
         findItem.setWidth(70);
         findItem.setEndRow(false);
 
-        TextItem skuItem = new TextItem("SKU");
+        TextItem carRegNumber = new TextItem("车牌号码");
 
-        itemName = new ComboBoxItem("itemName");
-        itemName.setOptionDataSource(supplyItemDS);
-        itemName.setPickListWidth(250);
+        terminalIdBoxItem = new ComboBoxItem("终端号");
+        terminalIdBoxItem.setOptionDataSource(supplyItemDS);
+        terminalIdBoxItem.setPickListWidth(250);
 
-        CheckboxItem findInCategory = new CheckboxItem("findInCategory");
-        findInCategory.setTitle("Use Category");
-        findInCategory.setDefaultValue(true);
-        findInCategory.setShouldSaveValue(false);
+        CheckboxItem findInDepartment = new CheckboxItem("findInDepartment");
+        findInDepartment.setTitle("只查找所选单位");
+        findInDepartment.setDefaultValue(true);
+        findInDepartment.setShouldSaveValue(false);
 
-        setItems(findItem, skuItem, itemName, findInCategory);
+        setItems(findItem, carRegNumber, terminalIdBoxItem, findInDepartment);
     }
 
-    public ComboBoxItem getItemNameField() {
-        return itemName;
+    public ComboBoxItem getTerminalIdField() {
+        return terminalIdBoxItem;
     }
 
     public void addFindListener(ClickHandler handler) {
