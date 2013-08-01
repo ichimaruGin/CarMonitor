@@ -1,4 +1,4 @@
-package org.zju.carmonitor.client.shared;
+package org.zju.car_monitor.client;
 
 public class CarDto extends DtoAbstract{
 	

@@ -1,8 +1,10 @@
 package org.zju.carmonitor.client;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import org.zju.carmonitor.client.shared.CarDto;
+import org.zju.car_monitor.client.CAT718TerminalEventDto;
+import org.zju.car_monitor.client.CarDto;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -14,4 +16,10 @@ public interface CarMonitorUIServiceAsync {
 	void getTerminalsMap(AsyncCallback<LinkedHashMap<String, String>> callback);
 
 	void saveCar(CarDto carDto, AsyncCallback<Void> callback);
+
+	void getDepartmentsIdsParentIdsMap(
+			AsyncCallback<HashMap<String, String>> callback);
+
+	void getCAT718TerminalEvent(String terminalId,
+			AsyncCallback<CAT718TerminalEventDto> callback);
 }

@@ -38,7 +38,7 @@ public class TerminalEventAttribute extends DbObject {
 
 
     public static TerminalEventAttribute findByCode(String attrCode) {
-        List list = Hibernate.currentSession().createCriteria(TerminalEventAttribute.class)
+        List<?> list = Hibernate.currentSession().createCriteria(TerminalEventAttribute.class)
                 .add(Restrictions.eq("attrCode", attrCode)).list();
         if (list == null || list.size() == 0) throw new RuntimeException("Can't find TerminalEventAttribute by code " + attrCode);
         return (TerminalEventAttribute)list.get(0);

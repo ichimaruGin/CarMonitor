@@ -16,8 +16,8 @@ public class TerminalEvent extends DbObject{
 
     @Column(name = "process_flag")
     String processFlag = null;
-
-    @Column(name = "process_message")
+    
+	@Column(name = "process_message")
     String processMessage = null;
 
     public Terminal getTerminal() {

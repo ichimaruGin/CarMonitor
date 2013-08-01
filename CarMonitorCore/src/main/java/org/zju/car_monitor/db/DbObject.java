@@ -6,9 +6,7 @@ import org.zju.car_monitor.util.Hibernate;
 
 import javax.persistence.*;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.List;
+import java.util.Date;
 
 /**
  * @author jiezhen 7/17/13
@@ -47,13 +45,23 @@ public abstract class DbObject {
     String id = null;
 
     @Column(name = "created_at")
-    @Type(type = "date")
-    Date createdAt = null;
+    @Temporal(TemporalType.TIMESTAMP)
+    Date createdAt;
 
 
     @Column(name = "updated_at")
-    @Type(type = "date")
-    Date updatedAt = null;
+    @Temporal(TemporalType.TIMESTAMP)
+    Date updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        updatedAt = createdAt = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = new Date();
+    }
 
     public String save() {
         return (String)Hibernate.currentSession().save(this);

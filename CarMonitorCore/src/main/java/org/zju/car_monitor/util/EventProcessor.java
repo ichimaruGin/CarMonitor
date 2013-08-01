@@ -59,7 +59,7 @@ public final class EventProcessor {
         //saveLongAttrValue(terminalEvent, strToLongValue(values[5]), CAT718EventAttribute.drunkDriveAttribute);
         saveCharAttrValue(terminalEvent, (values[6]), CAT718EventAttribute.tiedDriveStateAttribute());
         saveCharAttrValue(terminalEvent, (values[7]), CAT718EventAttribute.carLatitudeAttribute());
-        saveCharAttrValue(terminalEvent, (values[7]), CAT718EventAttribute.carLongitudeAttribute());
+        saveCharAttrValue(terminalEvent, (values[8]), CAT718EventAttribute.carLongitudeAttribute());
         // skip the last reserved field
     }
 

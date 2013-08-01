@@ -1,24 +1,25 @@
 package org.zju.carmonitor.server;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
-import com.google.gwt.dev.util.collect.HashMap;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import org.apache.commons.collections.map.HashedMap;
-import org.zju.car_monitor.db.Car;
-import org.zju.car_monitor.db.Department;
-import org.zju.car_monitor.db.Terminal;
+import org.apache.log4j.Logger;
+import org.zju.car_monitor.client.CAT718TerminalEventDto;
+import org.zju.car_monitor.client.CarDto;
+import org.zju.car_monitor.db.*;
 import org.zju.car_monitor.util.Hibernate;
 import org.zju.car_monitor.util.ReadOnlyTask;
 import org.zju.car_monitor.util.ReadWriteTask;
 import org.zju.carmonitor.client.CarMonitorUIService;
-import org.zju.carmonitor.client.shared.CarDto;
 
 public class CarMonitorUIServiceImpl extends RemoteServiceServlet implements CarMonitorUIService {
-    // Implementation of sample interface method
+    
+	private static Logger logger = Logger.getLogger(CarMonitorUIServiceImpl.class);
+	
+	// Implementation of sample interface method
     public String getMessage(String msg) {
         return "Client said: \"" + msg + "\"<br>Server answered: \"Hi!\"";
     }
@@ -26,6 +27,8 @@ public class CarMonitorUIServiceImpl extends RemoteServiceServlet implements Car
     
 	@SuppressWarnings("unchecked")
 	public LinkedHashMap<String, String> getDepartmentsMap() {
+		
+		logger.info("Get departments map");
 		return (LinkedHashMap<String, String>)
 				 Hibernate.readOnly(new ReadOnlyTask<LinkedHashMap<String, String>>() {
 
@@ -46,6 +49,7 @@ public class CarMonitorUIServiceImpl extends RemoteServiceServlet implements Car
 	@SuppressWarnings("unchecked")
 	public LinkedHashMap<String, String> getTerminalsMap() {
 		
+		logger.info("Get terminals map");
 		return (LinkedHashMap<String, String>)Hibernate.readOnly(new ReadOnlyTask<LinkedHashMap<String, String>>(){
 
 			public LinkedHashMap<String, String> doWork() {
@@ -67,18 +71,98 @@ public class CarMonitorUIServiceImpl extends RemoteServiceServlet implements Car
 		Hibernate.readWrite(new ReadWriteTask() {
 			
 			public void doWork() {
-				Car car = new Car();
-				car.setRegNumber(carDto.getCarRegNumber());
-				car.setType(carDto.getCarType());
-				car.setDriverName(carDto.getDriverName());
-				car.setDriverPhone(carDto.getDriverPhone());
-				Department department = (Department) Hibernate.currentSession().get(Department.class, carDto.getDepartmentId());
-				Terminal terminal = (Terminal) Hibernate.currentSession().get(Terminal.class, carDto.getTerminalId());
-				car.setDepartment(department);
-				car.setTerminal(terminal);
-				car.save();
+				Car existingCar = Car.findCarByTerminalUUId(carDto.getTerminalId());
+				if (existingCar == null) {
+					Car.saveCar(carDto);
+				} else {
+					Car.updateCar(existingCar, carDto);
+				}
+				
 			}
 		});
 		
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public java.util.HashMap<String, String> getDepartmentsIdsParentIdsMap() {
+		
+		logger.info("Get departments id parent ids map");
+		
+		return (java.util.HashMap<String, String>) Hibernate.readOnly(new ReadOnlyTask<HashMap<String, String>>(){
+
+			public HashMap<String, String> doWork() {
+				
+				List<Department> departments = Department.findAllDepartments();
+				HashMap<String, String> idsMap = new HashMap<String, String>();
+				
+				for(Department department: departments) {
+					idsMap.put(department.getId(), department.getParentId());
+				}
+				
+				return idsMap;
+
+			}
+			
+		});
+		
+	}
+
+
+	public CAT718TerminalEventDto getCAT718TerminalEvent(final String terminalId) {
+
+        logger.info("Starting to get CAT718 terminal event for terminal " + terminalId);
+		
+		return (CAT718TerminalEventDto) Hibernate.readOnly(new ReadOnlyTask() {
+
+			public Object doWork() {
+				CAT718TerminalEvent event = CAT718TerminalEvent.findLatestEventByTerminalId(terminalId);
+                CAT718TerminalEventDto dto = new CAT718TerminalEventDto();
+				if (event != null) {
+					List<TerminalEventAttrLong> list = TerminalEventAttrLong.getEventAttrCharByEventId(event.getId());
+                    for (TerminalEventAttrLong eventAttrLong: list) {
+                        String attrCode = eventAttrLong.getAttribute().getAttrCode();
+
+                        logger.info("Found " + attrCode + " event value " );
+
+                        if (attrCode.equals(CAT718EventAttribute.CAR_SPEED_PARAM)){
+                            String attrValue = eventAttrLong.getAttrValue() + " 公里每小时";
+                            dto.setCurrentSpeed(attrValue);
+                        } else if (attrCode.equals(CAT718EventAttribute.CAR_WATER_TEMP_PARAM)) {
+                            String attrValue = eventAttrLong.getAttrValue() + " 度";
+                            dto.setCurrentWaterTemp(attrValue);
+                        } else if (attrCode.equals(CAT718EventAttribute.CAR_RPM_PARAM)) {
+                            String attrValue = eventAttrLong.getAttrValue() + " 转每分钟";
+                            dto.setCurrentRpm(attrValue);
+                        } else {
+                            logger.error("unknown long attribute " + attrCode);
+                        }
+
+                    }
+
+                    List<TerminalEventAttrChar> listChar = TerminalEventAttrChar.getEventAttrCharByEventId(event.getId());
+                    for (TerminalEventAttrChar eventAttrChar: listChar) {
+                        String attrCode = eventAttrChar.getAttribute().getAttrCode();
+                        logger.info("Found " + attrCode + " event value " );
+
+                        if (attrCode.equals(CAT718EventAttribute.CAR_LATITUDE)) {
+                            dto.setCurrentLatitude(eventAttrChar.getAttrValue());
+                        } else if (attrCode.equals(CAT718EventAttribute.CAR_LONGITUDE)) {
+                            dto.setCurrentLongitude(eventAttrChar.getAttrValue());
+                        }  else {
+                            logger.error("unknown char attribute " + attrCode);
+                        }
+                    }
+
+                    dto.setEventType(EventType.CAR718.toString());
+                    dto.setUpdatedTime(event.getUpdatedAt().toString());
+                    return dto;
+				} else {
+                    logger.info("No event available for terminal " + terminalId);
+                }
+				return null;
+			}
+			
+		});
 	}
 }

@@ -12,10 +12,11 @@
     <inherits name="com.smartclient.theme.enterpriseblue.EnterpriseBlue"/>
 
     <inherits name="com.smartgwt.tools.SmartGwtTools"/>
+    
+    <inherits name="org.zju.car_monitor.CarMonitorCore"/>
 
     <!-- Specify the app entry point class.                   -->
     <entry-point class='org.zju.carmonitor.client.CarMonitorUI'/>
-
 
     <!-- Specify the app servlets.                   -->
     <servlet path='/CarMonitorUIService' class='org.zju.carmonitor.server.CarMonitorUIServiceImpl'/>

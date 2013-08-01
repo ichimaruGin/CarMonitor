@@ -31,7 +31,9 @@ public class XmlServlet extends HttpServlet {
 				for (Car car: cars) {
 					sb.append("<car>");
 					sb.append(XmlUtil.pair("departmentName", car.getDepartment().getLongName()));
+					sb.append(XmlUtil.pair("departmentId", car.getDepartment().getId()));
 					sb.append(XmlUtil.pair("terminalId", car.getTerminal().getTerminalId()));
+					sb.append(XmlUtil.pair("terminalId_", car.getTerminal().getId()));
 					sb.append(XmlUtil.pair("driverName",car.getDriverName()));
 					sb.append(XmlUtil.pair("driverPhone",car.getDriverPhone()));
 					sb.append(XmlUtil.pair("carType", car.getType()));

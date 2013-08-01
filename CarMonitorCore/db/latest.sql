@@ -10,8 +10,8 @@ create table `departments` (
   `parent_id` char(36) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
   `long_name` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
+  `created_at` TIMESTAMP,
+  `updated_at` TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -34,12 +34,12 @@ create table `cars` (
   `department_id` char(36) COLLATE utf8_unicode_ci DEFAULT NULL,
   `terminal_id` char(36) COLLATE utf8_unicode_ci DEFAULT NULL,
   `map_id` char(36) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
+  `created_at` TIMESTAMP,
+  `updated_at` TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-insert into cars values ('68f230af-9e45-4a49-b8cd-018aa710356e', '浙AC687R', '福克斯','张三', '1367500000', '3dc0189a-5453-431e-8ba8-032cf6532c68', 'd3f8d7e0-784f-41cb-8f15-b57c528971f9', null, null, null);
+insert into cars values ('68f230af-9e45-4a49-b8cd-018aa710356e', '浙AC687R', '福克斯','张三', '1367500000', '3dc0189a-5453-431e-8ba8-032cf6532c68', 'a4119d8d-9300-437d-b097-1a922a60c81e', null, null, null);
 
 drop table if exists `terminals`;
 create table `terminals` (
@@ -53,8 +53,8 @@ create table `terminals` (
   `sampling_data_upload_seconds` int(11) DEFAULT NULL,
   `tl_wake_up_interval_seconds` int(11) DEFAULT NULL,
   `idle_status_upload_seconds` int(11) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
+  `created_at` TIMESTAMP,
+  `updated_at` TIMESTAMP,
   UNIQUE KEY `terminal_id_uk` (`terminal_id`),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -64,10 +64,11 @@ insert into `terminals` values('a4119d8d-9300-437d-b097-1a922a60c81e','00001',15
 drop table if exists `maps`;
 create table `map` (
   `id` char(36) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
+  `created_at` TIMESTAMP,
+  `updated_at` TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 drop table if exists `terminal_events`;
 create table `terminal_events` (
@@ -76,23 +77,30 @@ create table `terminal_events` (
   `type` char(6) COLLATE utf8_unicode_ci NOT NULL,
   `process_flag` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   `process_message` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
+  `created_at` TIMESTAMP,
+  `updated_at` TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+insert into `terminal_events` values ('42958bb8-a94f-4cb4-8408-07e7c4a82875','a4119d8d-9300-437d-b097-1a922a60c81e', 'CAT718',null, null, '2013-07-29 01:25:00','2013-07-29 01:25:00');
 
 drop table `terminal_event_attributes`;
 create table `terminal_event_attributes` (
  `id` char(36) COLLATE utf8_unicode_ci NOT NULL,
+ `type` char(6) COLLATE utf8_unicode_ci NOT NULL,
  `attr_code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
- `created_at` datetime DEFAULT NULL,
- `updated_at` datetime DEFAULT NULL,
+ `created_at` TIMESTAMP,
+ `updated_at` TIMESTAMP,
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-insert into `terminal_event_attributes` values ('e27eed4f-459a-434f-aec6-b0517a2b209f','CAR_WATER_TEMP_PARAM', '水温参数', '2013-07-12 12:12:32', '2013-07-12 12:12:32');
-insert into `terminal_event_attributes` values ('025d0728-fabf-4995-b70b-dbb2335fe181', 'CAR_SPEED', '车速', '2013-07-12 12:12:32', '2013-07-12 12:12:32');
+insert into `terminal_event_attributes` values ('e27eed4f-459a-434f-aec6-b0517a2b209f','CAT718', 'CAR_WATER_TEMP_PARAM', '水温参数', '2013-07-12 12:12:32', '2013-07-12 12:12:32');
+insert into `terminal_event_attributes` values ('025d0728-fabf-4995-b70b-dbb2335fe181','CAT718', 'CAR_SPEED_PARAM', '车速', '2013-07-12 12:12:32', '2013-07-12 12:12:32');
+insert into `terminal_event_attributes` values ('531cb3fe-893d-4b31-bca1-c153910123d0','CAT718','CAR_LATITUDE', '纬度', '2013-07-12 12:12:32', '2013-07-12 12:12:32');
+insert into `terminal_event_attributes` values ('7812283c-6adb-450c-a612-6f984ca6f9dc', 'CAT718','CAR_LONGITUDE', '经度', '2013-07-12 12:12:32', '2013-07-12 12:12:32');
+insert into `terminal_event_attributes` values ('f4128212-3331-4987-99de-40c659c9a7c0', 'CAT718','CAR_RPM_PARAM', '转速', '2013-07-12 12:12:32', '2013-07-12 12:12:32');
+
 
 drop table if exists `terminal_event_attr_char`;
 create table `terminal_event_attr_char` (
@@ -100,10 +108,14 @@ create table `terminal_event_attr_char` (
   `event_id` char(36) COLLATE utf8_unicode_ci NOT NULL,
   `attr_id` char(36) COLLATE utf8_unicode_ci NOT NULL,
   `attr_value` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
+  `created_at` TIMESTAMP,
+  `updated_at` TIMESTAMP,
   PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+insert into `terminal_event_attr_char` values ('375e6cd7-473f-4564-af78-6d1c8ab85712', '42958bb8-a94f-4cb4-8408-07e7c4a82875','531cb3fe-893d-4b31-bca1-c153910123d0', '129.4', '2013-07-12 12:12:32', '2013-07-12 12:12:32');
+insert into `terminal_event_attr_char` values ('db3d9fdf-8632-4f88-97ad-933b2f9f85e5', '42958bb8-a94f-4cb4-8408-07e7c4a82875','7812283c-6adb-450c-a612-6f984ca6f9dc', '119.3', '2013-07-12 12:12:32', '2013-07-12 12:12:32');
+
 
 drop table if exists `terminal_event_attr_long`;
 create table `terminal_event_attr_long` (
@@ -111,8 +123,11 @@ create table `terminal_event_attr_long` (
   `event_id` char(36) COLLATE utf8_unicode_ci NOT NULL,
   `attr_id` char(36) COLLATE utf8_unicode_ci NOT NULL,
   `attr_value` int(11) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
+  `created_at` TIMESTAMP,
+  `updated_at` TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+insert into `terminal_event_attr_long` values ('2f96401a-6b6d-4f3d-b4be-566f261e5935', '42958bb8-a94f-4cb4-8408-07e7c4a82875','e27eed4f-459a-434f-aec6-b0517a2b209f',89, '2013-07-12 12:12:32', '2013-07-12 12:12:32');
+insert into `terminal_event_attr_long` values ('48c95b48-fb38-41be-8cda-f890610b733f', '42958bb8-a94f-4cb4-8408-07e7c4a82875','025d0728-fabf-4995-b70b-dbb2335fe181',119, '2013-07-12 12:12:32', '2013-07-12 12:12:32');
+insert into `terminal_event_attr_long` values ('3c4edaf9-f5d4-4911-aae8-d4d57736b2f5', '42958bb8-a94f-4cb4-8408-07e7c4a82875','f4128212-3331-4987-99de-40c659c9a7c0',2500, '2013-07-12 12:12:32', '2013-07-12 12:12:32');

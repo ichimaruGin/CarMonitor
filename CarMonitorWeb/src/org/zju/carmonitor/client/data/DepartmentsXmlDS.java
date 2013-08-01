@@ -22,12 +22,9 @@ public class DepartmentsXmlDS extends DataSource {
 
         setID(id);
         setRecordXPath("/List/department");
-
-
         DataSourceTextField idField = new DataSourceTextField("id", null);
         idField.setHidden(true);
         idField.setPrimaryKey(true);
-
         DataSourceTextField departmentNameField = new DataSourceTextField("name", "所属单位", 128, true);
 
         DataSourceTextField parentField = new DataSourceTextField("parentId", null);

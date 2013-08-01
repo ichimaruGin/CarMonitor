@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.criterion.Restrictions;
+import org.zju.car_monitor.client.CarDto;
 import org.zju.car_monitor.util.Hibernate;
 
 /**
@@ -90,7 +92,27 @@ public class Car extends DbObject {
     public void setTerminal(Terminal terminal) {
         this.terminal = terminal;
     }
-
+    
+    public static void updateCar(Car car, CarDto carDto) {
+    	carSetter(car, carDto);
+    	car.saveOrUpdate();
+    }
+    
+    private static void carSetter(Car car, CarDto carDto) {
+    	car.setRegNumber(carDto.getCarRegNumber());
+		car.setType(carDto.getCarType());
+		car.setDriverName(carDto.getDriverName());
+		car.setDriverPhone(carDto.getDriverPhone());
+		Department department = (Department) Hibernate.currentSession().get(Department.class, carDto.getDepartmentId());
+		Terminal terminal = (Terminal) Hibernate.currentSession().get(Terminal.class, carDto.getTerminalId());
+		car.setDepartment(department);
+		car.setTerminal(terminal);
+    }
+    public static void saveCar(CarDto carDto) {
+    	Car car = new Car();
+    	carSetter(car, carDto);
+    	car.save();
+    }
     
     public void setMap(Map map) {
         this.map = map;
@@ -98,6 +120,13 @@ public class Car extends DbObject {
 
     public static List<Car> findAllCars() {
     	return Hibernate.currentSession().createCriteria(Car.class).list();
+    }
+    
+    public static Car findCarByTerminalUUId(String terminalId) {
+    	List<?> list =  Hibernate.currentSession().createCriteria(Car.class).createAlias("terminal", "terminal")
+    			.add(Restrictions.eq("terminal.id", terminalId)).list();
+    	if (list == null || list.size() == 0) return null;
+    		else return (Car) list.get(0);
     }
 
 }

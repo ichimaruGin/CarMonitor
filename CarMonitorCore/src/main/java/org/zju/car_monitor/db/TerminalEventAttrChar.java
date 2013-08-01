@@ -1,6 +1,10 @@
 package org.zju.car_monitor.db;
 
+import org.hibernate.criterion.Restrictions;
+import org.zju.car_monitor.util.Hibernate;
+
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author jiezhen 7/20/13
@@ -43,5 +47,9 @@ public class TerminalEventAttrChar extends DbObject{
 
     public void setAttrValue(String attrValue) {
         this.attrValue = attrValue;
+    }
+
+    public static List<TerminalEventAttrChar> getEventAttrCharByEventId(String eventId) {
+        return Hibernate.currentSession().createCriteria(TerminalEventAttrChar.class).createAlias("event", "event").add(Restrictions.eq("event.id", eventId)).list();
     }
 }
