@@ -18,12 +18,12 @@ public class CAT718EventTest{
     String message = "&CAT718#00001#100#100#100#####!";
     private static Logger logger = Logger.getLogger(CAT718EventTest.class);
 
-    public void prepare() {
-        TestServer testServer = new TestServer();
-        testServer.start();
-        logger.info("server started.");
-
-    }
+//    public void prepare() {
+//        TestServer testServer = new TestServer();
+//        testServer.start();
+//        logger.info("server started.");
+//
+//    }
 
     private byte[] stringToByteArray(String str) {
         char[] chars = str.toCharArray();
@@ -37,9 +37,9 @@ public class CAT718EventTest{
 
     @Test
     public void testOneMessage() {
-//        byte[] bytes = stringToByteArray(message);
-//        Client client = new Client();
-//        client.send(bytes);
+        byte[] bytes = stringToByteArray(message);
+        Client client = new Client("127.0.0.1", 7001);
+        client.send(bytes);
     }
 
 }

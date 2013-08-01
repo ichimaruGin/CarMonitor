@@ -45,7 +45,7 @@ public class Sender extends Thread{
     }
 
     public void send(){
-        if (client == null) client = new Client();
+        if (client == null) client = new Client("localhost", 7001);
         client.send(hexMessage);
     }
 

@@ -100,7 +100,8 @@ insert into `terminal_event_attributes` values ('025d0728-fabf-4995-b70b-dbb2335
 insert into `terminal_event_attributes` values ('531cb3fe-893d-4b31-bca1-c153910123d0','CAT718','CAR_LATITUDE', '纬度', '2013-07-12 12:12:32', '2013-07-12 12:12:32');
 insert into `terminal_event_attributes` values ('7812283c-6adb-450c-a612-6f984ca6f9dc', 'CAT718','CAR_LONGITUDE', '经度', '2013-07-12 12:12:32', '2013-07-12 12:12:32');
 insert into `terminal_event_attributes` values ('f4128212-3331-4987-99de-40c659c9a7c0', 'CAT718','CAR_RPM_PARAM', '转速', '2013-07-12 12:12:32', '2013-07-12 12:12:32');
-
+insert into `terminal_event_attributes` values ('cc5b3433-6ab9-4982-83c8-2ac87722beed', 'CAT718','CAR_OIL_PARAM', '燃油', '2013-07-12 12:12:32', '2013-07-12 12:12:32');
+insert into `terminal_event_attributes` values ('60af8671-edd1-409e-bca7-63c32c282af0', 'CAT718','TIRED_DRIVE_STATE', '疲劳驾驶', '2013-07-12 12:12:32', '2013-07-12 12:12:32');
 
 drop table if exists `terminal_event_attr_char`;
 create table `terminal_event_attr_char` (
