@@ -52,6 +52,7 @@ public class Hibernate {
             factory = configuration.buildSessionFactory();
             logger.info("End creating factory");
         } catch (Exception ex) {
+            logger.error(ex);
             ex.printStackTrace();
         }
     }
