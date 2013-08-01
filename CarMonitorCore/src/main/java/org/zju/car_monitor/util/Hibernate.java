@@ -47,12 +47,10 @@ public class Hibernate {
             configuration.setProperty("hibernate.c3p0.max_statements", "50");
             configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLInnoDBDialect");
 
-
-
             factory = configuration.buildSessionFactory();
             logger.info("End creating factory");
         } catch (Exception ex) {
-            logger.error(ex);
+            logger.info(ex);
             ex.printStackTrace();
         }
     }
