@@ -32,6 +32,7 @@ public class Hibernate {
             configuration.addAnnotatedClass(TerminalEventAttrChar.class);
             configuration.addAnnotatedClass(TerminalEventAttrLong.class);
             configuration.addAnnotatedClass(TerminalEventAttribute.class);
+            logger.info("After adding classes");
             configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
             configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/car_monitor_db?useUnicode=true&amp;characterEncoding=UTF-8");
             configuration.setProperty("hibernate.connection.charSet", "utf8");
@@ -46,7 +47,7 @@ public class Hibernate {
             configuration.setProperty("hibernate.c3p0.timeout","1800");
             configuration.setProperty("hibernate.c3p0.max_statements", "50");
             configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLInnoDBDialect");
-
+            logger.info("After setting properties");
             factory = configuration.buildSessionFactory();
             logger.info("End creating factory");
         } catch (Exception ex) {
