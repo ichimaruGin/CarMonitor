@@ -36,7 +36,6 @@ public class DataDecoder extends CumulativeProtocolDecoder {
         byteArrayList.add(first);
         for (int i = 0; i < bufferSize - 1 ; i ++) {
             byte b = ioBuffer.get();
-            logger.info("Adding byte to list: " + (char)b);
             byteArrayList.add(b);
             if ((char)b == '!') {
                 findEnding = true;
@@ -69,7 +68,12 @@ public class DataDecoder extends CumulativeProtocolDecoder {
             for (int i = 0; i < bytes.length; i ++) {
                 bts[i] = bytes[i];
             }
-            EventProcessor.process(bts);
+            try {
+            	EventProcessor.process(bts);
+            } catch(Exception e) {
+            	logger.error(e);
+            }
+            
             return true;
         }
 

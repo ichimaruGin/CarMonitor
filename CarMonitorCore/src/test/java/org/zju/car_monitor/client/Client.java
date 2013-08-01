@@ -20,12 +20,12 @@ public class Client {
     Logger logger = Logger.getLogger(Client.class);
     private IoSession session = null;
     ConnectFuture cf = null;
-    public Client() {
+    public Client(String ipAddress, int port) {
         logger.info("Starting client");
         NioSocketConnector connector = new NioSocketConnector();
         connector.setConnectTimeoutMillis(30*1000L);
         connector.setHandler(new ClientIoHandler());
-        cf = connector.connect(new InetSocketAddress("127.0.0.1",7001));
+        cf = connector.connect(new InetSocketAddress(ipAddress,port));
         connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new ObjectSerializationCodecFactory()));
         cf.awaitUninterruptibly();
         session = cf.getSession();
