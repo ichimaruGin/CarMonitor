@@ -1,5 +1,6 @@
 package org.zju.car_monitor.db;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -8,10 +9,9 @@ import org.zju.car_monitor.util.ReadOnlyTask;
 import org.zju.car_monitor.util.ReadWriteTask;
 
 
-@RunWith(JUnit4.class)
 public class TerminalEventTest {
 	
-	@Test
+	@Ignore
 	public void test718EventGet(){
 		Hibernate.readWrite(new ReadWriteTask(){
 

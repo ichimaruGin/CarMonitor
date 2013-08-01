@@ -1,5 +1,6 @@
 package org.zju.car_monitor.db;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -10,11 +11,10 @@ import org.zju.car_monitor.util.ReadWriteTask;
 /**
  * @author jiezhen 7/17/13
  */
-@RunWith(JUnit4.class)
 public class CarCurdTest{
 
 
-    @Test
+    @Ignore
     public void testCarInsert() {
         final Terminal terminal = new Terminal();
         terminal.setTerminalId("00001");
