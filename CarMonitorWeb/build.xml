@@ -17,6 +17,7 @@
   <property name="smart-dir" location="${user.home}/.m2/repository/com/smartgwt/smartgwt/2.4/"/>
   <property name="smart-skin-dir" location="${user.home}/.m2/repository/com/smartgwt/smartgwt-skins/2.4/"/>
   <property name="jpa-dir" location="${user.home}/.m2/repository/org/hibernate/javax/persistence/hibernate-jpa-2.0-api/"/>
+  <property name="hibernate-an-dir" location="${user.home}/.m2/repository/org/hibernate/common/hibernate-commons-annotations/4.0.2.Final/"/>
 
     <path id="project.class.path">
     <pathelement location="src/main/java"/>
@@ -31,6 +32,7 @@
     <copy todir="war/WEB-INF/lib" file="${gwt.sdk}/gwt-servlet.jar" />
     <copy todir="war/WEB-INF/lib" file="${gwt.sdk}/gwt-servlet-deps.jar" />
       <copy todir="war/WEB-INF/lib" file="${car-dir}/CarMonitorCore-1.0.jar" />
+      <copy todir="war/WEB-INF/lib" file="${hibernate-an-dir}/hibernate-commons-annotations-4.0.2.Final.jar" />
       <copy todir="war/WEB-INF/lib" file="${log4j-dir}/log4j-1.2.17.jar" />
       <copy todir="war/WEB-INF/lib" file="${slf4j-dir}/slf4j-api-1.7.5.jar" />
       <copy todir="war/WEB-INF/lib" file="${commons-dir}/commons-io-1.3.2.jar" />
