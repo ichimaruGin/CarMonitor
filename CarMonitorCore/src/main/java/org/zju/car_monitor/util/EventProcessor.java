@@ -40,26 +40,37 @@ public final class EventProcessor {
             return null;
         return Long.parseLong(value);
     }
-
-    //<1>#<2>#<3>#<4>#<5>#<6>#<7>#<8>#<9>#<10>#<11>#<12>!
+    
+    private static String stripValue(String value) {
+    	if (value.length() < 2 || value.charAt(0) != '<' || value.charAt(value.length() -1) != '>') {
+    		logger.error("Not a valid value " + value);
+    		return "";
+    	}
+    	return value.substring(1, value.length() -1);
+    }
+    
+    //"&CAT718#<00001>#<50>#<100>#<100>#<8000>#<20>#<0>#<0>#<0>#<0>#<0>#<0>!";
     private static void decodeAndSaveCAT718(String messageBody) {
         CAT718TerminalEvent terminalEvent = new CAT718TerminalEvent();
         String[] values = messageBody.split("#");
-        String terminalId = values[0];
+        String terminalId = stripValue(values[0]);
         Terminal terminal = Terminal.findByTerminalId(terminalId);
         terminalEvent.setTerminal(terminal);
         terminalEvent.setProcessFlag("N");
         terminalEvent.save();
-
-        saveLongAttrValue(terminalEvent, strToLongValue(values[1]), CAT718EventAttribute.carWaterTempAttribute());
-        saveLongAttrValue(terminalEvent, strToLongValue(values[2]), CAT718EventAttribute.carOilAttribute());
-        saveLongAttrValue(terminalEvent, strToLongValue(values[3]), CAT718EventAttribute.carSpeedAttribute());
-        saveLongAttrValue(terminalEvent, strToLongValue(values[4]), CAT718EventAttribute.carRpmAttribute());
-
+        logger.info("Saved terminalEvent for terminalId " + terminalId);
+        String waterTemp = stripValue(values[1]);
+        saveLongAttrValue(terminalEvent, strToLongValue(waterTemp), CAT718EventAttribute.carWaterTempAttribute());
+        String oil = stripValue(values[2]);
+        saveLongAttrValue(terminalEvent, strToLongValue(oil), CAT718EventAttribute.carOilAttribute());
+        String carSpeed = stripValue(values[3]); 
+        saveLongAttrValue(terminalEvent, strToLongValue(carSpeed), CAT718EventAttribute.carSpeedAttribute());
+        String carRpm = stripValue(values[4]);
+        saveLongAttrValue(terminalEvent, strToLongValue(carRpm), CAT718EventAttribute.carRpmAttribute());
         //saveLongAttrValue(terminalEvent, strToLongValue(values[5]), CAT718EventAttribute.drunkDriveAttribute);
-        saveCharAttrValue(terminalEvent, (values[6]), CAT718EventAttribute.tiedDriveStateAttribute());
-        saveCharAttrValue(terminalEvent, (values[7]), CAT718EventAttribute.carLatitudeAttribute());
-        saveCharAttrValue(terminalEvent, (values[8]), CAT718EventAttribute.carLongitudeAttribute());
+        saveCharAttrValue(terminalEvent, (stripValue(values[6])), CAT718EventAttribute.tiedDriveStateAttribute());
+        saveCharAttrValue(terminalEvent, (stripValue(values[7])), CAT718EventAttribute.carLatitudeAttribute());
+        saveCharAttrValue(terminalEvent, (stripValue(values[8])), CAT718EventAttribute.carLongitudeAttribute());
         // skip the last reserved field
     }
 

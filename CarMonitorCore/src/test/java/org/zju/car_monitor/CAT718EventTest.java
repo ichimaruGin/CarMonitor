@@ -15,7 +15,7 @@ import org.zju.car_monitor.server.TestServer;
 @RunWith(JUnit4.class)
 public class CAT718EventTest{
 
-    String message = "&CAT718#00001#100#100#100#####!";
+    String message = "&CAT718#<00001>#<50>#<100>#<100>#<8000>#<20>#<0>#<0>#<0>#<0>#<0>#<0>!";
     private static Logger logger = Logger.getLogger(CAT718EventTest.class);
 
 //    public void prepare() {
@@ -38,7 +38,7 @@ public class CAT718EventTest{
     @Test
     public void testOneMessage() {
         byte[] bytes = stringToByteArray(message);
-        Client client = new Client("198.71.92.14", 7001);
+        Client client = new Client("127.0.0.1", 7001);
         client.send(bytes);
     }
 
