@@ -2,6 +2,7 @@ package org.zju.car_monitor.db;
 
 import javax.persistence.*;
 
+
 /**
  * @author jiezhen 7/20/13
  */
@@ -19,8 +20,19 @@ public class TerminalEvent extends DbObject{
     
 	@Column(name = "process_message")
     String processMessage = null;
+	
+	@Column(name = "raw_message") 
+	String rawMessage = null;
 
-    public Terminal getTerminal() {
+    public String getRawMessage() {
+		return rawMessage;
+	}
+
+	public void setRawMessage(String rawMessage) {
+		this.rawMessage = rawMessage;
+	}
+
+	public Terminal getTerminal() {
         return terminal;
     }
 
@@ -43,5 +55,7 @@ public class TerminalEvent extends DbObject{
     public void setProcessMessage(String processMessage) {
         this.processMessage = processMessage;
     }
+    
+    
 
 }

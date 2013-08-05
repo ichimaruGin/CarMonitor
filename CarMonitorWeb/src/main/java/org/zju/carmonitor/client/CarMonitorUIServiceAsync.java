@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import org.zju.car_monitor.client.CAT718TerminalEventDto;
+import org.zju.car_monitor.client.CATOBDTerminalEventDto;
 import org.zju.car_monitor.client.CarDto;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -22,4 +23,7 @@ public interface CarMonitorUIServiceAsync {
 
 	void getCAT718TerminalEvent(String terminalId,
 			AsyncCallback<CAT718TerminalEventDto> callback);
+
+	void getCATOBDTerminalEvent(String terminalId,
+			AsyncCallback<CATOBDTerminalEventDto> callback);
 }

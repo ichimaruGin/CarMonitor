@@ -34,12 +34,20 @@ public class CAT718EventTest{
         return bytes;
 
     }
+    
+    private static Client client = new Client("127.0.0.1", 7001);
 
+//    @Test
+//    public void testOneMessage() {
+//        byte[] bytes = stringToByteArray(message);
+//        client.send(bytes);
+//    }
+//    
     @Test
-    public void testOneMessage() {
-        byte[] bytes = stringToByteArray(message);
-        Client client = new Client("127.0.0.1", 7001);
-        client.send(bytes);
+    public void testErrMessage() {
+    	String msg = "&CATOBD#<00001>#<8999>#<7123>#<A567>#<>#<>#<>#<>#<>#<B111>!";
+    	byte[] bytes = stringToByteArray(msg);
+    	client.send(bytes);
     }
 
 }

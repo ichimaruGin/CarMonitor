@@ -60,6 +60,13 @@ create table `terminals` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 insert into `terminals` values('a4119d8d-9300-437d-b097-1a922a60c81e','00001',150, 200, 200, 30, 5, 5, 200, 100,   '2013-07-12 12:12:32', '2013-07-12 12:12:32');
+insert into `terminals` values('e522cd5f-23e0-4d5f-8187-bfaa381c9026','00002',150, 200, 200, 30, 5, 5, 200, 100,   '2013-07-12 12:12:32', '2013-07-12 12:12:32');
+insert into `terminals` values('5a9cb92c-048d-4cb2-bd6c-fef07a8637f8','00003',150, 200, 200, 30, 5, 5, 200, 100,   '2013-07-12 12:12:32', '2013-07-12 12:12:32');
+insert into `terminals` values('8f7509f6-f509-4531-8eaa-a7032a89626f','00004',150, 200, 200, 30, 5, 5, 200, 100,   '2013-07-12 12:12:32', '2013-07-12 12:12:32');
+insert into `terminals` values('bbdc3cf3-7f1a-4e87-9ca7-4d52173375b8','00005',150, 200, 200, 30, 5, 5, 200, 100,   '2013-07-12 12:12:32', '2013-07-12 12:12:32');
+insert into `terminals` values('ce5ee8cf-d958-4859-ad39-c069db1dc4b3','00006',150, 200, 200, 30, 5, 5, 200, 100,   '2013-07-12 12:12:32', '2013-07-12 12:12:32');
+insert into `terminals` values('033cc190-9e94-4675-8df3-692e7406dce9','00007',150, 200, 200, 30, 5, 5, 200, 100,   '2013-07-12 12:12:32', '2013-07-12 12:12:32');
+insert into `terminals` values('e3e57ee7-37be-4bb6-9398-e0016dca2e9b','00008',150, 200, 200, 30, 5, 5, 200, 100,   '2013-07-12 12:12:32', '2013-07-12 12:12:32');
 
 drop table if exists `maps`;
 create table `map` (
@@ -77,12 +84,13 @@ create table `terminal_events` (
   `type` char(6) COLLATE utf8_unicode_ci NOT NULL,
   `process_flag` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   `process_message` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `raw_message` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` TIMESTAMP,
   `updated_at` TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-insert into `terminal_events` values ('42958bb8-a94f-4cb4-8408-07e7c4a82875','a4119d8d-9300-437d-b097-1a922a60c81e', 'CAT718',null, null, '2013-07-29 01:25:00','2013-07-29 01:25:00');
+insert into `terminal_events` values ('42958bb8-a94f-4cb4-8408-07e7c4a82875','a4119d8d-9300-437d-b097-1a922a60c81e', 'CAT718',null, null, 'Stored by script', '2013-07-29 01:25:00','2013-07-29 01:25:00');
 
 drop table `terminal_event_attributes`;
 create table `terminal_event_attributes` (
@@ -102,6 +110,7 @@ insert into `terminal_event_attributes` values ('7812283c-6adb-450c-a612-6f984ca
 insert into `terminal_event_attributes` values ('f4128212-3331-4987-99de-40c659c9a7c0', 'CAT718','CAR_RPM_PARAM', '转速', '2013-07-12 12:12:32', '2013-07-12 12:12:32');
 insert into `terminal_event_attributes` values ('cc5b3433-6ab9-4982-83c8-2ac87722beed', 'CAT718','CAR_OIL_PARAM', '燃油', '2013-07-12 12:12:32', '2013-07-12 12:12:32');
 insert into `terminal_event_attributes` values ('60af8671-edd1-409e-bca7-63c32c282af0', 'CAT718','TIRED_DRIVE_STATE', '疲劳驾驶', '2013-07-12 12:12:32', '2013-07-12 12:12:32');
+insert into `terminal_event_attributes` values ('8162955e-397b-4481-812c-03ca72382ebe', 'CATOBD','CAR_OBD_ERR', '故障码', '2013-07-12 12:12:32', '2013-07-12 12:12:32');
 
 drop table if exists `terminal_event_attr_char`;
 create table `terminal_event_attr_char` (

@@ -10,20 +10,20 @@
     </appender>
 
     <appender name="FILE" class="org.apache.log4j.FileAppender">
-       <param name="File" value="../../logs/jltech_log4j.log" />
+       <param name="File" value="./logs/car_monitor_log4j.log" />
        <layout class="org.apache.log4j.PatternLayout"> 
           <param name="ConversionPattern" value="%d %-5p %c.%M:%L - %m%n"/> 
        </layout> 
     </appender>
 
-    <appender name="MAIL" class="org.apache.log4j.net.SMTPAppender">  
+    <!-- <appender name="MAIL" class="org.apache.log4j.net.SMTPAppender">  
         <param name="threshold" value="debug" />  
-        <!-- 日志的错误级别  
+        日志的错误级别  
         <param name="threshold" value="fatal"/>  
-        -->  
+         
         
-        <!-- 缓存文件大小，日志达到512K时发送Email -->  
-        <param name="BufferSize" value="512" /><!-- 单位K -->  
+        缓存文件大小，日志达到512K时发送Email  
+        <param name="BufferSize" value="512" />单位K  
         <param name="From" value="test@163.com" />  
         <param name="SMTPHost" value="smtp.163.com" />  
         <param name="Subject" value="juyee-log4jMessage" />  
@@ -34,7 +34,7 @@
             <param name="ConversionPattern" value="%d %-5p %c.%M:%L - %m%n"/> 
         </layout>  
     </appender> 
-     
+     --> 
     <!-- specify the logging level for loggers from other libraries -->
     <!-- 
     <logger name="log4jdbc.debug">
@@ -57,6 +57,9 @@
  		<level value="FATEL" />
  	</logger>
  -->
+ <logger name="org.hibernate">
+ 	<level value="WARN"/>
+ </logger>
     
    <!-- for all other loggers log only debug and above log messages -->
      <root>
