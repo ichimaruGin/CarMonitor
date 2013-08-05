@@ -4,6 +4,7 @@ import org.hibernate.criterion.Restrictions;
 import org.zju.car_monitor.util.Hibernate;
 
 import javax.persistence.*;
+
 import java.util.List;
 
 /**
@@ -48,6 +49,14 @@ public class TerminalEventAttrChar extends DbObject{
     public void setAttrValue(String attrValue) {
         this.attrValue = attrValue;
     }
+    
+    public static TerminalEventAttrChar getEventAttrCharByEventIdAndType(String eventId, String attrCode) {
+    	List<TerminalEventAttrChar> list = Hibernate.currentSession().createCriteria(TerminalEventAttrChar.class).createAlias("event","event").createAlias("attribute", "attribute").
+    	add(Restrictions.eq("event.id", eventId)).add(Restrictions.eq("attribute.attrCode", attrCode )).list();
+    	if (list == null || list.size() == 0) return null;
+    	else return list.get(0);
+    }
+
 
     public static List<TerminalEventAttrChar> getEventAttrCharByEventId(String eventId) {
         return Hibernate.currentSession().createCriteria(TerminalEventAttrChar.class).createAlias("event", "event").add(Restrictions.eq("event.id", eventId)).list();

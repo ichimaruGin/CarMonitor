@@ -1,8 +1,13 @@
 package org.zju.carmonitor.server;
 
 import org.apache.log4j.Logger;
+import org.zju.car_monitor.client.Constants;
+import org.zju.car_monitor.db.CAT718EventAttribute;
+import org.zju.car_monitor.db.CAT718TerminalEvent;
+import org.zju.car_monitor.db.CATOBDTerminalEvent;
 import org.zju.car_monitor.db.Car;
 import org.zju.car_monitor.db.Department;
+import org.zju.car_monitor.db.TerminalEventAttrLong;
 import org.zju.car_monitor.util.Hibernate;
 import org.zju.car_monitor.util.ReadOnlyTask;
 
@@ -48,6 +53,42 @@ public class XmlServlet extends HttpServlet {
     	});
     }
     
+    
+    private String createEventsXML(final String terminalId, final String type) {
+    	String xml = (String) Hibernate.readOnly(new ReadOnlyTask<String>() {
+
+			public String doWork() {
+				List<CAT718TerminalEvent> list = CAT718TerminalEvent.findNoOfEvents(terminalId, 100);
+				StringBuilder builder = new StringBuilder();
+				builder.append("<List>");
+				
+				if (list != null) {
+					for (CAT718TerminalEvent event: list) {
+						builder.append("<event>");
+						TerminalEventAttrLong attr = TerminalEventAttrLong.getEventAttrLongByEventIdAndType(event.getId(), type);
+						builder.append(XmlUtil.pair("time", attr.getCreatedAt().toString()));
+						if (type.equals(Constants.CAR_SPEED_PARAM)) {
+							builder.append(XmlUtil.pair("value", attr.getAttrValue() + " 公里每小时"));
+						} else if (type.equals(Constants.CAR_RPM_PARAM)) {
+							builder.append(XmlUtil.pair("value", attr.getAttrValue() + " 转每分钟"));
+						} else if (type.equals(Constants.CAR_WATER_TEMP_PARAM)) {
+							builder.append(XmlUtil.pair("value", attr.getAttrValue() + " 摄氏度"));
+						}
+						
+						builder.append("</event>");
+					}
+				}
+				builder.append("<List>");
+				
+				return builder.toString();
+				
+			}
+    		
+    	});
+    	
+    	return xml;
+    }
+    
     private String createDepartmentsXML() {
         String xml = (String) Hibernate.readOnly(new ReadOnlyTask<String>() {
             public String doWork() {
@@ -86,6 +127,10 @@ public class XmlServlet extends HttpServlet {
                 resp.getWriter().write(createDepartmentsXML());
             } else if (para.equals("cars")) {
             	resp.getWriter().write(createCarsXML());
+            } else if (para.equals("events")){
+            	String type = req.getParameter("type");
+            	String terminalId = req.getParameter("terminalId");
+            	resp.getWriter().write(createEventsXML(terminalId, type));
             } else{
                 logger.error("error match param");
             }

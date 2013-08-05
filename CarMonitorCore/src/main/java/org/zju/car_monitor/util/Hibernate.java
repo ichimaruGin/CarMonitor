@@ -32,6 +32,9 @@ public class Hibernate {
             configuration.addAnnotatedClass(TerminalEventAttrChar.class);
             configuration.addAnnotatedClass(TerminalEventAttrLong.class);
             configuration.addAnnotatedClass(TerminalEventAttribute.class);
+            configuration.addAnnotatedClass(CATOBDEventAttribute.class);
+            configuration.addAnnotatedClass(CATOBDTerminalEvent.class);
+            
             logger.info("After adding classes");
             configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
             configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/car_monitor_db?useUnicode=true&amp;characterEncoding=UTF-8");

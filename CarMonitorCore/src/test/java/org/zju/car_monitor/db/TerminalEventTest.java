@@ -20,7 +20,7 @@ public class TerminalEventTest {
 				CAT718TerminalEvent newEvent = new CAT718TerminalEvent();
 				newEvent.setTerminal(terminal);
 				newEvent.save();
-				CAT718TerminalEvent event = CAT718TerminalEvent.findLatestEventByTerminalId("00001");
+				CAT718TerminalEvent event =  CAT718TerminalEvent.findLatestEvent("00001");
 				if (event == null) {
 					System.out.println("event is null");
 				}

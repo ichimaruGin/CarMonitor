@@ -51,8 +51,15 @@ public class TerminalEventAttrLong extends DbObject{
     public void setAttrValue(long attrValue) {
         this.attrValue = attrValue;
     }
-
-    public static List<TerminalEventAttrLong> getEventAttrCharByEventId(String eventId) {
+    
+    public static TerminalEventAttrLong getEventAttrLongByEventIdAndType(String eventId, String attrCode) {
+    	List<TerminalEventAttrLong> list = Hibernate.currentSession().createCriteria(TerminalEventAttrLong.class).createAlias("event","event").createAlias("attribute", "attribute").
+    	add(Restrictions.eq("event.id", eventId)).add(Restrictions.eq("attribute.attrCode", attrCode )).list();
+    	if (list == null || list.size() == 0) return null;
+    	else return list.get(0);
+    }
+    
+    public static List<TerminalEventAttrLong> getEventAttrLongByEventId(String eventId) {
         return Hibernate.currentSession().createCriteria(TerminalEventAttrLong.class).createAlias("event", "event").add(Restrictions.eq("event.id", eventId)).list();
     }
 }

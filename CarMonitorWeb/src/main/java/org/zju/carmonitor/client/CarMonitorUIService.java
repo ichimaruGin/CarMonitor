@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import org.zju.car_monitor.client.CAT718TerminalEventDto;
+import org.zju.car_monitor.client.CATOBDTerminalEventDto;
 import org.zju.car_monitor.client.CarDto;
+import org.zju.car_monitor.db.CATOBDTerminalEvent;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -22,6 +24,8 @@ public interface CarMonitorUIService extends RemoteService {
     HashMap<String, String> getDepartmentsIdsParentIdsMap();
     
     CAT718TerminalEventDto getCAT718TerminalEvent(String terminalId);
+    
+    CATOBDTerminalEventDto getCATOBDTerminalEvent(String terminalId);
     
     void saveCar(CarDto carDto);
 

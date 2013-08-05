@@ -1,6 +1,8 @@
 package org.zju.carmonitor.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.RepeatingCommand;
 import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.types.VisibilityMode;
@@ -20,12 +22,15 @@ import com.smartgwt.client.widgets.menu.MenuItem;
 import com.smartgwt.client.widgets.menu.events.MenuItemClickEvent;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.smartgwt.client.widgets.tree.events.NodeClickHandler;
+
 import org.zju.carmonitor.client.data.DepartmentsXmlDS;
 
 public class CarMonitorUI extends HLayout implements EntryPoint {
     private DepartmentsTreeGrid departmentsTreeGrid;
     private CarListGrid carList;
     private CarStatusViewPane carStatusViewPane;
+    private String selectedTerminaId = null;
+    private String selectedCarRegNumber = null;
 
     public void onModuleLoad() {
         setWidth100();
@@ -45,19 +50,35 @@ public class CarMonitorUI extends HLayout implements EntryPoint {
                 findItems(idAndParentIds);
             }
         });
+        carStatusViewPane = new CarStatusViewPane();
 
+
+        int _5_seconds = 5 * 1000;
+        Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
+
+			public boolean execute() {
+				if (selectedCarRegNumber != null && selectedTerminaId != null) {
+					carStatusViewPane.updateCarStatus(selectedTerminaId, selectedCarRegNumber);
+				}
+				return true;
+			}
+        	
+        }, _5_seconds);
+        
+        
         carList = new CarListGrid(carXmlDS);
         carList.addRecordClickHandler(new RecordClickHandler() {
             public void onRecordClick(RecordClickEvent event) {
             	if (event.getRecord() != null) {
             		String terminalId = event.getRecord().getAttribute("terminalId");
+            		selectedTerminaId = terminalId;
                     String carRegNumber = event.getRecord().getAttribute("carRegNumber");
+                    selectedCarRegNumber = carRegNumber;
                     carStatusViewPane.updateCarStatus(terminalId, carRegNumber);
             	}
             }
         });
 
-        carStatusViewPane = new CarStatusViewPane();
 
         SectionStack leftSideLayout = new SectionStack();
         leftSideLayout.setWidth(280);

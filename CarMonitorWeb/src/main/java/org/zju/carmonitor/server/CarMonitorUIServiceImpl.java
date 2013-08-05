@@ -8,6 +8,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import org.apache.log4j.Logger;
 import org.zju.car_monitor.client.CAT718TerminalEventDto;
+import org.zju.car_monitor.client.CATOBDTerminalEventDto;
 import org.zju.car_monitor.client.CarDto;
 import org.zju.car_monitor.db.*;
 import org.zju.car_monitor.util.Hibernate;
@@ -111,28 +112,24 @@ public class CarMonitorUIServiceImpl extends RemoteServiceServlet implements Car
 
 	public CAT718TerminalEventDto getCAT718TerminalEvent(final String terminalId) {
 
-        logger.info("Starting to get CAT718 terminal event for terminal " + terminalId);
-		
 		return (CAT718TerminalEventDto) Hibernate.readOnly(new ReadOnlyTask() {
 
 			public Object doWork() {
-				CAT718TerminalEvent event = CAT718TerminalEvent.findLatestEventByTerminalId(terminalId);
+				CAT718TerminalEvent event = CAT718TerminalEvent.findLatestEvent(terminalId);
                 CAT718TerminalEventDto dto = new CAT718TerminalEventDto();
 				if (event != null) {
-					List<TerminalEventAttrLong> list = TerminalEventAttrLong.getEventAttrCharByEventId(event.getId());
+					List<TerminalEventAttrLong> list = TerminalEventAttrLong.getEventAttrLongByEventId(event.getId());
                     for (TerminalEventAttrLong eventAttrLong: list) {
                         String attrCode = eventAttrLong.getAttribute().getAttrCode();
 
-                        logger.info("Found " + attrCode + " event value " );
-
-                        if (attrCode.equals(CAT718EventAttribute.CAR_SPEED_PARAM)){
+                       if (attrCode.equals(CAT718EventAttribute.CAR_SPEED_PARAM)){
                             String attrValue = eventAttrLong.getAttrValue() + " 公里每小时";
                             dto.setCurrentSpeed(attrValue);
                         } else if (attrCode.equals(CAT718EventAttribute.CAR_WATER_TEMP_PARAM)) {
-                            String attrValue = eventAttrLong.getAttrValue() + " 度";
+                            String attrValue = (eventAttrLong.getAttrValue() - 40) + " 摄氏度";
                             dto.setCurrentWaterTemp(attrValue);
                         } else if (attrCode.equals(CAT718EventAttribute.CAR_RPM_PARAM)) {
-                            String attrValue = eventAttrLong.getAttrValue() + " 转每分钟";
+                            String attrValue = (eventAttrLong.getAttrValue() /4 ) + " 转每分钟";
                             dto.setCurrentRpm(attrValue);
                         } else {
                             logger.error("unknown long attribute " + attrCode);
@@ -143,7 +140,6 @@ public class CarMonitorUIServiceImpl extends RemoteServiceServlet implements Car
                     List<TerminalEventAttrChar> listChar = TerminalEventAttrChar.getEventAttrCharByEventId(event.getId());
                     for (TerminalEventAttrChar eventAttrChar: listChar) {
                         String attrCode = eventAttrChar.getAttribute().getAttrCode();
-                        logger.info("Found " + attrCode + " event value " );
 
                         if (attrCode.equals(CAT718EventAttribute.CAR_LATITUDE)) {
                             dto.setCurrentLatitude(eventAttrChar.getAttrValue());
@@ -160,9 +156,30 @@ public class CarMonitorUIServiceImpl extends RemoteServiceServlet implements Car
 				} else {
                     logger.info("No event available for terminal " + terminalId);
                 }
-				return null;
+				
+			return null;
+		
 			}
 			
+		});
+	}
+
+
+	public CATOBDTerminalEventDto getCATOBDTerminalEvent(final String terminalId) {
+		return (CATOBDTerminalEventDto) Hibernate.readOnly(new ReadOnlyTask<CATOBDTerminalEventDto>() {
+			
+			public CATOBDTerminalEventDto doWork() {
+				CATOBDTerminalEventDto dto = new CATOBDTerminalEventDto();
+				CATOBDTerminalEvent event = CATOBDTerminalEvent.findLatestEvent(terminalId);
+				if (event != null) {
+					List<TerminalEventAttrChar> values = TerminalEventAttrChar.getEventAttrCharByEventId(event.getId());
+					for (TerminalEventAttrChar value: values) {
+						dto.addMessage(value.getAttrValue());
+					}
+					return dto;
+				} else return null;
+				
+			}
 		});
 	}
 }
