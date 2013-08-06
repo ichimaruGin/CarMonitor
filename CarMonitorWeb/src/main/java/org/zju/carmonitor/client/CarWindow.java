@@ -25,7 +25,6 @@ import com.smartgwt.client.widgets.layout.VLayout;
 
 public class CarWindow {
 	
-	private ListGrid listGrid;
 	public Window getWindow() {
 		return window;
 	}
@@ -38,7 +37,6 @@ public class CarWindow {
 	
 	public CarWindow(ListGrid list, String departmentId, String terminalId, String carRegNumber, 
 			String carType, String driverName, String driverPhone) {
-		listGrid = list;
 		window.setTitle("更新车辆数据");
 	}
 	
@@ -49,11 +47,10 @@ public class CarWindow {
 		return vLayout;
 	}
 	
-    public CarWindow() {
-    	CarCanvas canvas = new CarCanvas();
-    	canvas.setListGrid(listGrid);
+    public CarWindow(ListGrid listGrid) {
+    	CarCanvas canvas = new CarCanvas(listGrid);
     	window.setWidth("50%");
-        window.setHeight("25%");
+        window.setHeight("30%");
         window.setTitle("添加新车辆");
         window.setShowMinimizeButton(false);
         window.setIsModal(true);

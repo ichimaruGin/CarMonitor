@@ -40,7 +40,7 @@ class CarTerminalEditButton extends IButton {
     			carTerminalWindow.setIsModal(true);
     			carTerminalWindow.setShowModalMask(true);
     			carTerminalWindow.centerInPage();
-    			CarTerminalTabSet tabSet = new CarTerminalTabSet(carTerminalWindow);
+    			CarTerminalTabSet tabSet = new CarTerminalTabSet(carTerminalWindow, listGrid);
     			tabSet.fillCarData(departmentId, terminalId_, carRegNumber, carType, driverName, driverPhone);
     			carTerminalWindow.addItem(tabSet);
     			carTerminalWindow.show();

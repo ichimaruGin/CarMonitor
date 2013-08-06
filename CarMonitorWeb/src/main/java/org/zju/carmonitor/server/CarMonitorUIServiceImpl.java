@@ -153,10 +153,7 @@ public class CarMonitorUIServiceImpl extends RemoteServiceServlet implements Car
                     dto.setEventType(EventType.CAR718.toString());
                     dto.setUpdatedTime(event.getUpdatedAt().toString());
                     return dto;
-				} else {
-                    logger.info("No event available for terminal " + terminalId);
-                }
-				
+				} 
 			return null;
 		
 			}

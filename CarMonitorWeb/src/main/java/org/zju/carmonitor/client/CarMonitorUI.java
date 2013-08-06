@@ -101,7 +101,7 @@ public class CarMonitorUI extends HLayout implements EntryPoint {
         addButton.addClickHandler(new ClickHandler() {
 
             public void onClick(ClickEvent event) {
-                CarWindow addNewCarWindow = new CarWindow();
+                CarWindow addNewCarWindow = new CarWindow(carList);
                 addNewCarWindow.show();
             }
         });
