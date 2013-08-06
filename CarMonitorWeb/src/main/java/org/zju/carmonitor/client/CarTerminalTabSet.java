@@ -5,13 +5,14 @@ import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
 
 public class CarTerminalTabSet extends TabSet {
 	
-	private CarCanvas carCanvas = new CarCanvas();
-	private TerminalCanvas terminalCanvas = new TerminalCanvas();
+	private CarCanvas carCanvas; 
+	private TerminalCanvas terminalCanvas;
 	
 	public void fillCarData(String departmentId, String terminalId, String carRegNumber, 
 			String carType, String driverName, String driverPhone) { 
@@ -19,8 +20,10 @@ public class CarTerminalTabSet extends TabSet {
 	}
 	
 	private Window parentWindow;
-	public CarTerminalTabSet(Window outerWindow) {
+	public CarTerminalTabSet(Window outerWindow, ListGrid list) {
 		parentWindow = outerWindow;
+		carCanvas = new CarCanvas(list);
+		terminalCanvas = new TerminalCanvas();
 		this.setWidth("100%");
 		this.setHeight("100%");
 		this.setTabBarPosition(Side.LEFT);

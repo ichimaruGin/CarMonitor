@@ -25,8 +25,8 @@ public final class EventProcessor {
         Hibernate.readWrite(new ReadWriteTask() {
             public void doWork() {
                 switch (eventType) {
-                    case CAT718: decodeAndSaveCAT718(event);
-                    case CATOBD: decodeAndSaveCATOBD(event);
+                    case CAT718: decodeAndSaveCAT718(event); break;
+                    case CATOBD: decodeAndSaveCATOBD(event); break;
                 }
 
             }

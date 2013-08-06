@@ -70,9 +70,9 @@ public class XmlServlet extends HttpServlet {
 						if (type.equals(Constants.CAR_SPEED_PARAM)) {
 							builder.append(XmlUtil.pair("value", attr.getAttrValue() + " 公里每小时"));
 						} else if (type.equals(Constants.CAR_RPM_PARAM)) {
-							builder.append(XmlUtil.pair("value", attr.getAttrValue() + " 转每分钟"));
+							builder.append(XmlUtil.pair("value", (attr.getAttrValue() /4) + " 转每分钟"));
 						} else if (type.equals(Constants.CAR_WATER_TEMP_PARAM)) {
-							builder.append(XmlUtil.pair("value", attr.getAttrValue() + " 摄氏度"));
+							builder.append(XmlUtil.pair("value", (attr.getAttrValue() - 40) + " 摄氏度"));
 						}
 						
 						builder.append("</event>");

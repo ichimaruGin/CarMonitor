@@ -33,9 +33,9 @@ public class CarCanvas extends VLayout {
 		driverPhoneTextItem.setValue(driverPhone);
 	}
 	
-	public CarCanvas(String departmentId, String terminalId, String carRegNumber, 
+	public CarCanvas(ListGrid list, String departmentId, String terminalId, String carRegNumber, 
 			String carType, String driverName, String driverPhone) {
-		this();
+		this(list);
 		department.setValue(departmentId);
 		terminal.setValue(terminalId);
 		carRegNumberTextItem.setValue(carRegNumber);
@@ -55,11 +55,12 @@ public class CarCanvas extends VLayout {
 		listGrid = list;
 	}
 	
-	public CarCanvas() {
+	public CarCanvas(ListGrid list) {
 	    this.setWidth100();
         this.setHeight100();
         this.setMembersMargin(5);
         this.setMargin(5);
+        this.setListGrid(list);
         buttonLayout = new LayoutWithButtons(this);
         buttonLayout.setOkClickHandler(new ClickHandler(){
 
@@ -73,6 +74,7 @@ public class CarCanvas extends VLayout {
 				if(departmentId == null || carRegNumber == null || carTypeString == null
 						|| driverNameString == null || driverPhoneString == null) {
 					SC.say("请在保存之前填好相应属性");
+					return;
 				}
 				
 				CarDto carDto = new CarDto();
