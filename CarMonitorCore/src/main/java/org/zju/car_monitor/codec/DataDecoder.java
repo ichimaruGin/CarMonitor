@@ -27,7 +27,9 @@ public class DataDecoder extends CumulativeProtocolDecoder {
         ioBuffer.mark();
         byte first = ioBuffer.get();
         if ((int)first == 13) {
-        	//if it is carriage return skip it
+        	//if it is carriage return skip it and skip the next 2
+        	ioBuffer.get();
+        	ioBuffer.get();
         	first = ioBuffer.get();
         }
         if ((char)first != '&') {
