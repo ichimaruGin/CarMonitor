@@ -1,7 +1,7 @@
 set charset "utf8";
 drop database if exists `car_monitor_db`;
 create database `car_monitor_db` character set utf8 collate utf8_unicode_ci;
-create user `car_db_user`@`localhost` IDENTIFIED by 'password';
+create user `car_db_user` IDENTIFIED by 'password';
 grant all on `car_monitor_db`.* to `car_db_user`@`localhost`;
 use `car_monitor_db`;
 drop table if exists `departments`;
@@ -92,7 +92,7 @@ create table `terminal_events` (
 
 insert into `terminal_events` values ('42958bb8-a94f-4cb4-8408-07e7c4a82875','a4119d8d-9300-437d-b097-1a922a60c81e', 'CAT718',null, null, 'Stored by script', '2013-07-29 01:25:00','2013-07-29 01:25:00');
 
-drop table `terminal_event_attributes`;
+drop table if exists `terminal_event_attributes`;
 create table `terminal_event_attributes` (
  `id` char(36) COLLATE utf8_unicode_ci NOT NULL,
  `type` char(6) COLLATE utf8_unicode_ci NOT NULL,

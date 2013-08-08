@@ -26,6 +26,10 @@ public class DataDecoder extends CumulativeProtocolDecoder {
         int bufferSize = ioBuffer.remaining();
         ioBuffer.mark();
         byte first = ioBuffer.get();
+        if ((int)first == 13) {
+        	//if it is carriage return skip it
+        	first = ioBuffer.get();
+        }
         if ((char)first != '&') {
             logger.info("Message doesn't start with &. Skip it. First = " + (char)first);
             ioBuffer.reset();
