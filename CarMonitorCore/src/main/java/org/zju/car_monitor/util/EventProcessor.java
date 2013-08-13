@@ -136,7 +136,7 @@ public final class EventProcessor {
         long rpm = strToLongValue(carRpm);
         saveLongAttrValue(terminalEvent, rpm, CAT718EventAttribute.carRpmAttribute());
         TiredDriveCheck.checkTiredDrive(terminalId, rpm);
-        //saveLongAttrValue(terminalEvent, strToLongValue(values[5]), CAT718EventAttribute.drunkDriveAttribute);
+        saveLongAttrValue(terminalEvent, strToLongValue(values[5]), CAT718EventAttribute.drunkDriveAttribute());
         saveCharAttrValue(terminalEvent, (stripValue(values[6])), CAT718EventAttribute.tiedDriveStateAttribute());
         saveCharAttrValue(terminalEvent, (stripValue(values[7])), CAT718EventAttribute.carLatitudeAttribute());
         saveCharAttrValue(terminalEvent, (stripValue(values[8])), CAT718EventAttribute.carLongitudeAttribute());

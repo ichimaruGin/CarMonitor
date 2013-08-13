@@ -9,6 +9,7 @@ public interface Constants extends java.io.Serializable{
     public static String EXCEPTION_CODE_OBD_ERR = "CAR_OBD_ERR";
     public static String EXCEPTION_CODE_HIGH_SPEED = "HIGH_SPEED";
     public static String EXCEPTION_CODE_TIRED_DRIVE = "TIRED_DRIVE";
+    public static String EXCEPTION_CODE_DRUNK = "DRUNK_DRIVE";
     
     public static String DRUNK_DRIVE = "DRUNK_DRIVE";
     public static String TIRED_DRIVE_STATE = "TIRED_DRIVE_STATE";

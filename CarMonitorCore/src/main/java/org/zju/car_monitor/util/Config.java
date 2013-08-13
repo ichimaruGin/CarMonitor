@@ -15,6 +15,9 @@ public class Config {
 		try {
 			
 			InputStream inputStream = Config.class.getClassLoader().getResourceAsStream("/app.properties");
+			if (inputStream == null) {
+				inputStream = Config.class.getClassLoader().getSystemResourceAsStream("./config/app.properties");
+			}
 			properties = new Properties();
 			properties.load(inputStream);
 			TIRED_DRIVE_REST_TIME = Long.parseLong((String) properties.get("tired_drive.rest_time")) * 60 * 1000;

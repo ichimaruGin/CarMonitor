@@ -74,6 +74,8 @@ public class XmlServlet extends HttpServlet {
 							builder.append(XmlUtil.pair("value",  exception.getLongValue() + " 分钟"));
 						} else if (type.equals(Constants.EXCEPTION_CODE_OBD_ERR)) {
 							builder.append(XmlUtil.pair("value", exception.getCharValue()));
+						} else if (type.equals(Constants.EXCEPTION_CODE_DRUNK)) {
+							builder.append(XmlUtil.pair("value", Constants.EXCEPTION_CODE_DRUNK));
 						}
 						String process;
 						if ("N".equals(exception.getProcessFlag())) {

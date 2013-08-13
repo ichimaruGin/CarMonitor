@@ -26,6 +26,7 @@ import org.zju.carmonitor.client.data.CarObdRecordXmlDS;
 import org.zju.carmonitor.client.data.CarRpmEventXmlDS;
 import org.zju.carmonitor.client.data.CarSpeedEventXmlDS;
 import org.zju.carmonitor.client.data.CarWaterTempXmlDS;
+import org.zju.carmonitor.client.data.DrunkDriveRecordXmlDS;
 import org.zju.carmonitor.client.data.HighSpeedRecordXmlDS;
 import org.zju.carmonitor.client.data.TiredDriveRecordXmlDS;
 
@@ -67,10 +68,10 @@ public class CarStatusViewPane extends TabSet {
                     waterTempTextItem.setValue(result.getCurrentWaterTemp());
                     positionItem.setValue("(" + result.getCurrentLatitude() + "," + result.getCurrentLongitude() + ")");
                 } else {
-                	speedTextItem.clearValue();
-                	rpmTextItem.clearValue();
-                	waterTempTextItem.clearValue();
-                	positionItem.clearValue();
+                	speedTextItem.setValue("--");
+                	rpmTextItem.setValue("--");
+                	waterTempTextItem.setValue("--");
+                	positionItem.setValue("--");
                 }
                 updateCurrentTime();
 
@@ -178,6 +179,17 @@ public class CarStatusViewPane extends TabSet {
         });
         
         drunkDriveButton.setStartRow(false);
+        drunkDriveButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				DrunkDriveRecordXmlDS ds = DrunkDriveRecordXmlDS.getInstance(selectedTerminalId);
+				TerminalEventWindow window = new TerminalEventWindow("疲劳驾驶历史纪录", ds, true);
+				window.show();
+			}
+        	
+        });
+
+        
         errItem.setStartRow(false);
         errItem.addClickHandler(new ClickHandler() {
 

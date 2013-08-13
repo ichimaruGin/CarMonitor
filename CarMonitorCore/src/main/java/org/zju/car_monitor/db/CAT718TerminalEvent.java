@@ -25,7 +25,7 @@ public class CAT718TerminalEvent extends TerminalEvent{
 			long now = System.currentTimeMillis();
 			CAT718TerminalEvent event =  l.get(0);
 			long updTime = event.createdAt.getTime();
-			if (now - Constants.TIME_OUT_SECONDS > updTime) event = null;
+			if (now - Constants.TIME_OUT_SECONDS * 1000 > updTime) event = null;
 			return event;
 		}
 		else return null;

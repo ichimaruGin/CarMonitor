@@ -85,4 +85,7 @@ public class CAT718EventAttribute extends TerminalEventAttribute implements Cons
     	return carLongitudeAttribute;
     	
     }
+    
+ 
+    
 }
