@@ -53,7 +53,7 @@ public class CarMonitorUI extends HLayout implements EntryPoint {
         carStatusViewPane = new CarStatusViewPane();
 
 
-        int _5_seconds = 5 * 1000;
+        int _10_seconds = 10 * 1000;
         Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
 
 			public boolean execute() {
@@ -63,7 +63,7 @@ public class CarMonitorUI extends HLayout implements EntryPoint {
 				return true;
 			}
         	
-        }, _5_seconds);
+        }, _10_seconds);
         
         
         carList = new CarListGrid(carXmlDS);

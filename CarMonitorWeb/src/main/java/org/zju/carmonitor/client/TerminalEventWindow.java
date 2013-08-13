@@ -19,7 +19,7 @@ public class TerminalEventWindow {
 	}
 	
 	
-	public TerminalEventWindow(String title, DataSource ds) {
+	public TerminalEventWindow(String title, DataSource ds, boolean hasProcessButton) {
 		
 		window = new Window();
 		window.setTitle(title);
@@ -37,7 +37,9 @@ public class TerminalEventWindow {
 		tabSet.addTab(tab);
 		tabSet.addTab(tab2);
 		HLayout hlayout = new HLayout();
-		ListGrid eventGrid = new TerminalEventListGrid(ds);
+		
+		ListGrid eventGrid = null; 
+		if (!hasProcessButton) eventGrid = new TerminalEventListGrid(ds); else eventGrid = new ExceptionListGrid(ds);
 		ds.invalidateCache();
 		eventGrid.setAutoFetchData(true);
 		tab.setPane(hlayout);

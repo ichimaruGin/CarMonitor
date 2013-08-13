@@ -1,5 +1,6 @@
 package org.zju.carmonitor.server;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.zju.car_monitor.client.CAT718TerminalEventDto;
 import org.zju.car_monitor.client.CATOBDTerminalEventDto;
 import org.zju.car_monitor.client.CarDto;
+import org.zju.car_monitor.client.ExceptionDataDto;
 import org.zju.car_monitor.db.*;
 import org.zju.car_monitor.util.Hibernate;
 import org.zju.car_monitor.util.ReadOnlyTask;
@@ -178,5 +180,44 @@ public class CarMonitorUIServiceImpl extends RemoteServiceServlet implements Car
 				
 			}
 		});
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public List<ExceptionDataDto> getExceptionDataList(final String terminalId) {
+		return (List<ExceptionDataDto>) Hibernate.readOnly(new ReadOnlyTask<List<ExceptionDataDto>>() {
+			
+			public List<ExceptionDataDto> doWork() {
+				List<ExceptionDataDto> dtoList = new ArrayList<ExceptionDataDto>();
+				List<TerminalException> exceptions = TerminalException.findUnProcessEvents(terminalId);
+				if (exceptions != null) {
+					for (TerminalException exception: exceptions) {
+						ExceptionDataDto dto = new ExceptionDataDto();
+						dto.setCode(exception.getCode());
+						if (exception.getCharValue() != null) {
+							dto.setMessage(exception.getCharValue());
+						} else {
+							dto.setMessage(exception.getLongValue() +"");
+						}
+						dtoList.add(dto);
+					}
+					return dtoList;
+				} else return null;
+				
+			}
+		});
+	}
+
+
+	public void processException(final String id) {
+		Hibernate.readWrite(new ReadWriteTask() {
+
+			public void doWork() {
+				TerminalException.processException(id);
+				logger.info("processed " + id);
+			}
+			
+		});
+		
 	}
 }

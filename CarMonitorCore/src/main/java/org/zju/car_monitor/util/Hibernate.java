@@ -34,6 +34,7 @@ public class Hibernate {
             configuration.addAnnotatedClass(TerminalEventAttribute.class);
             configuration.addAnnotatedClass(CATOBDEventAttribute.class);
             configuration.addAnnotatedClass(CATOBDTerminalEvent.class);
+            configuration.addAnnotatedClass(TerminalException.class);
             
             logger.info("After adding classes");
             configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");

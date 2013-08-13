@@ -7,7 +7,9 @@ import org.zju.car_monitor.db.CAT718TerminalEvent;
 import org.zju.car_monitor.db.CATOBDTerminalEvent;
 import org.zju.car_monitor.db.Car;
 import org.zju.car_monitor.db.Department;
+import org.zju.car_monitor.db.TerminalEventAttrChar;
 import org.zju.car_monitor.db.TerminalEventAttrLong;
+import org.zju.car_monitor.db.TerminalException;
 import org.zju.car_monitor.util.Hibernate;
 import org.zju.car_monitor.util.ReadOnlyTask;
 
@@ -53,8 +55,49 @@ public class XmlServlet extends HttpServlet {
     	});
     }
     
+    private String createExceptionsXML(final String terminalId, final String type) {
+    	String xml = (String) Hibernate.readOnly(new ReadOnlyTask<String>() {
+
+			public String doWork() {
+				List<TerminalException> list = TerminalException.findNoOfEvents(terminalId, 100);
+				StringBuilder builder = new StringBuilder();
+				builder.append("<List>");
+				
+				if (list != null) {
+					for (TerminalException exception: list) {
+						builder.append("<event>");
+						builder.append(XmlUtil.pair("id", exception.getId()));
+						builder.append(XmlUtil.pair("time", exception.getCreatedAt().toString()));
+						if (type.equals(Constants.EXCEPTION_CODE_HIGH_SPEED)) {
+							builder.append(XmlUtil.pair("value", exception.getLongValue() + " 公里每小时"));
+						} else if (type.equals(Constants.EXCEPTION_CODE_TIRED_DRIVE)) {
+							builder.append(XmlUtil.pair("value",  exception.getLongValue() + " 分钟"));
+						} else if (type.equals(Constants.EXCEPTION_CODE_OBD_ERR)) {
+							builder.append(XmlUtil.pair("value", exception.getCharValue()));
+						}
+						String process;
+						if ("N".equals(exception.getProcessFlag())) {
+							process = "未处理";
+						}else {
+							process = "已处理";
+						}
+						builder.append(XmlUtil.pair("processFlag", process));
+						builder.append("</event>");
+					}
+				}
+				builder.append("<List>");
+				
+				return builder.toString();
+				
+			}
+    		
+    	});
+    	
+    	return xml;
+
+    }
     
-    private String createEventsXML(final String terminalId, final String type) {
+      private String createCAT718EventsXML(final String terminalId, final String type) {
     	String xml = (String) Hibernate.readOnly(new ReadOnlyTask<String>() {
 
 			public String doWork() {
@@ -128,10 +171,15 @@ public class XmlServlet extends HttpServlet {
             } else if (para.equals("cars")) {
             	resp.getWriter().write(createCarsXML());
             } else if (para.equals("events")){
-            	String type = req.getParameter("type");
+            	String eventType = req.getParameter("eventType");
+            	String type = req.getParameter("dataType");
             	String terminalId = req.getParameter("terminalId");
-            	resp.getWriter().write(createEventsXML(terminalId, type));
-            } else{
+            	if (Constants.EVENT_TYPE_CAT718.equals(eventType)) {
+            		resp.getWriter().write(createCAT718EventsXML(terminalId, type));
+            	} else if (Constants.EVENT_TYPE_EXCEPTION.equals(eventType)) {
+            		resp.getWriter().write(createExceptionsXML(terminalId, type));
+            	}
+            } else {
                 logger.error("error match param");
             }
             resp.flushBuffer();

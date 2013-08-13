@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.zju.car_monitor.client.Constants;
 import org.zju.car_monitor.util.Hibernate;
 
 
@@ -17,7 +18,13 @@ public class CATOBDTerminalEvent extends TerminalEvent {
 	
 	public static CATOBDTerminalEvent findLatestEvent(String terminalId) {
 		List<CATOBDTerminalEvent> l =  findNoOfEvents(terminalId, 1);
-		if (l != null) return l.get(0);
+		if (l != null) {
+			long now = System.currentTimeMillis();
+			CATOBDTerminalEvent event =  l.get(0);
+			long updTime = event.createdAt.getTime();
+			if (now - Constants.TIME_OUT_SECONDS > updTime) event = null;
+			return event;
+		}
 		else return null;
 	}
 	

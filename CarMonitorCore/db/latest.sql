@@ -138,6 +138,19 @@ create table `terminal_event_attr_long` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+drop table if exists `terminal_exceptions`;
+create table `terminal_exceptions`(
+  `id` char(36) COLLATE utf8_unicode_ci NOT NULL,
+  `terminal_id` char(36) COLLATE utf8_unicode_ci NOT NULL,
+  `code` char(20) COLLATE utf8_unicode_ci NOT NULL,
+  `long_value` int(11) DEFAULT NULL,
+  `char_value` varchar(255) DEFAULT NULL,
+  `process_flag` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` TIMESTAMP,
+  `updated_at` TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 insert into `terminal_event_attr_long` values ('2f96401a-6b6d-4f3d-b4be-566f261e5935', '42958bb8-a94f-4cb4-8408-07e7c4a82875','e27eed4f-459a-434f-aec6-b0517a2b209f',89, '2013-07-12 12:12:32', '2013-07-12 12:12:32');
 insert into `terminal_event_attr_long` values ('48c95b48-fb38-41be-8cda-f890610b733f', '42958bb8-a94f-4cb4-8408-07e7c4a82875','025d0728-fabf-4995-b70b-dbb2335fe181',119, '2013-07-12 12:12:32', '2013-07-12 12:12:32');
 insert into `terminal_event_attr_long` values ('3c4edaf9-f5d4-4911-aae8-d4d57736b2f5', '42958bb8-a94f-4cb4-8408-07e7c4a82875','f4128212-3331-4987-99de-40c659c9a7c0',2500, '2013-07-12 12:12:32', '2013-07-12 12:12:32');

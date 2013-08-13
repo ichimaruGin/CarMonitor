@@ -1,6 +1,7 @@
 package org.zju.car_monitor.util;
 
 import org.apache.log4j.Logger;
+import org.zju.car_monitor.client.Constants;
 import org.zju.car_monitor.db.*;
 
 /**
@@ -50,7 +51,7 @@ public final class EventProcessor {
     }
     
     private static void saveTerminalEvent(TerminalEvent terminalEvent, String terminalId, String body) {
-    	Terminal terminal = Terminal.findByTerminalId(terminalId);
+    	Terminal terminal = TerminalCache.getTerminal(terminalId);
         terminalEvent.setTerminal(terminal);
         terminalEvent.setProcessFlag("N");
         terminalEvent.setRawMessage(body);
@@ -95,10 +96,21 @@ public final class EventProcessor {
         	
         	String convertedValue = convertedCode + value.substring(1);
         	saveCharAttrValue(terminalEvent, convertedValue, CATOBDEventAttribute.carObdErrEventAttribute());
+        	saveToException(terminalId, convertedValue);
         }
 		
 	}
 	
+	
+	private static void saveToException(String terminalId, String value) {
+		
+		TerminalException exception = new TerminalException();
+		Terminal terminal = TerminalCache.getTerminal(terminalId);
+		exception.setTerminal(terminal);
+		exception.setCode(Constants.EXCEPTION_CODE_OBD_ERR);
+		exception.setProcessFlag("N");
+		exception.setCharValue(value);
+	}
 	private static String[] parseValues(String message) {
         final String body = message.substring(8).replace(">!", ">");
         String[] values = body.split("#");
@@ -116,10 +128,14 @@ public final class EventProcessor {
         saveLongAttrValue(terminalEvent, strToLongValue(waterTemp), CAT718EventAttribute.carWaterTempAttribute());
         String oil = stripValue(values[2]);
         saveLongAttrValue(terminalEvent, strToLongValue(oil), CAT718EventAttribute.carOilAttribute());
-        String carSpeed = stripValue(values[3]); 
-        saveLongAttrValue(terminalEvent, strToLongValue(carSpeed), CAT718EventAttribute.carSpeedAttribute());
+        String carSpeed = stripValue(values[3]);
+        long speed = strToLongValue(carSpeed);
+        saveLongAttrValue(terminalEvent, speed, CAT718EventAttribute.carSpeedAttribute());
+        HighSpeedCheck.checkHighSpeed(terminalId, speed);
         String carRpm = stripValue(values[4]);
-        saveLongAttrValue(terminalEvent, strToLongValue(carRpm), CAT718EventAttribute.carRpmAttribute());
+        long rpm = strToLongValue(carRpm);
+        saveLongAttrValue(terminalEvent, rpm, CAT718EventAttribute.carRpmAttribute());
+        TiredDriveCheck.checkTiredDrive(terminalId, rpm);
         //saveLongAttrValue(terminalEvent, strToLongValue(values[5]), CAT718EventAttribute.drunkDriveAttribute);
         saveCharAttrValue(terminalEvent, (stripValue(values[6])), CAT718EventAttribute.tiedDriveStateAttribute());
         saveCharAttrValue(terminalEvent, (stripValue(values[7])), CAT718EventAttribute.carLatitudeAttribute());

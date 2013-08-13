@@ -1,12 +1,15 @@
 package org.zju.carmonitor.client.data;
 
+import org.zju.car_monitor.client.Constants;
+
 public class CarRpmEventXmlDS extends TerminalEventXmlDS{
 	
 	public static CarRpmEventXmlDS instance;
 
-	public static CarRpmEventXmlDS getInstance(String terminalId_, String dataType_) {
+	public static CarRpmEventXmlDS getInstance(String terminalId_) {
     	terminalId = terminalId_;
-    	dataType = dataType_;
+    	dataType = Constants.CAR_RPM_PARAM;
+    	eventType = Constants.EVENT_TYPE_CAT718;
         if (instance == null) {
             instance = new CarRpmEventXmlDS("CarRpmEventXmlDS");
         }
@@ -14,7 +17,7 @@ public class CarRpmEventXmlDS extends TerminalEventXmlDS{
     }
 	
 	public CarRpmEventXmlDS(String id) {
-		super(id);
+		super(id, false);
 	}
 
 }
