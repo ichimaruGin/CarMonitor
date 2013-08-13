@@ -24,14 +24,13 @@ public class Config {
 			TIRED_DRIVE_MAX_DRIVE_TIME = Long.parseLong((String) properties.get("tired_drive.max_drive_time")) * 60 * 1000;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.exit(1);
 		}
 		
 	}
 	
-	public static long TIRED_DRIVE_REST_TIME; 
+	public static long TIRED_DRIVE_REST_TIME = 20 * 60 * 1000; 
 	
-	public static long TIRED_DRIVE_MAX_DRIVE_TIME; 
+	public static long TIRED_DRIVE_MAX_DRIVE_TIME = 3 * 3600 * 1000; 
 	
 	
 
