@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.zju.car_monitor.client.CAT718TerminalEventDto;
 import org.zju.car_monitor.client.CATOBDTerminalEventDto;
 import org.zju.car_monitor.client.CarDto;
+import org.zju.car_monitor.client.Constants;
 import org.zju.car_monitor.client.ExceptionDataDto;
 import org.zju.car_monitor.db.*;
 import org.zju.car_monitor.util.Hibernate;
@@ -133,8 +134,6 @@ public class CarMonitorUIServiceImpl extends RemoteServiceServlet implements Car
                         } else if (attrCode.equals(CAT718EventAttribute.CAR_RPM_PARAM)) {
                             String attrValue = (eventAttrLong.getAttrValue() /4 ) + " 转每分钟";
                             dto.setCurrentRpm(attrValue);
-                        } else {
-                            logger.error("unknown long attribute " + attrCode);
                         }
 
                     }
@@ -189,17 +188,37 @@ public class CarMonitorUIServiceImpl extends RemoteServiceServlet implements Car
 			
 			public List<ExceptionDataDto> doWork() {
 				List<ExceptionDataDto> dtoList = new ArrayList<ExceptionDataDto>();
-				List<TerminalException> exceptions = TerminalException.findUnProcessEvents(terminalId);
+				
+				List<TerminalException> exceptions = new ArrayList<TerminalException>(); 
+				exceptions.add(TerminalException.findUnProcessEventsByCode(terminalId, Constants.EXCEPTION_CODE_HIGH_SPEED));
+				exceptions.add(TerminalException.findUnProcessEventsByCode(terminalId, Constants.EXCEPTION_CODE_TIRED_DRIVE));
+				exceptions.add(TerminalException.findUnProcessEventsByCode(terminalId, Constants.EXCEPTION_CODE_OBD_ERR));
+				exceptions.add(TerminalException.findUnProcessEventsByCode(terminalId, Constants.EXCEPTION_CODE_DRUNK));
+				
 				if (exceptions != null) {
 					for (TerminalException exception: exceptions) {
-						ExceptionDataDto dto = new ExceptionDataDto();
-						dto.setCode(exception.getCode());
-						if (exception.getCharValue() != null) {
-							dto.setMessage(exception.getCharValue());
-						} else {
-							dto.setMessage(exception.getLongValue() +"");
+						if (exception != null) {
+							ExceptionDataDto dto = new ExceptionDataDto();
+							String code = exception.getCode();
+							dto.setCode(code);
+							String value;
+							if (exception.getCharValue() != null) {
+								value = exception.getCharValue();
+							} else {
+								value = exception.getLongValue() +"";
+							}
+							if (code.equals(Constants.EXCEPTION_CODE_HIGH_SPEED)) {
+								value = value + " 公里每小时";
+							} else if (code.equals(Constants.EXCEPTION_CODE_TIRED_DRIVE)) {
+								value = value + " 分钟";
+							} else if (code.equals(Constants.EXCEPTION_CODE_DRUNK)) {
+								value = value + " 酒精度";
+							}
+							dto.setMessage(value);
+							dto.setTime(exception.getCreatedAt().toString());
+							dtoList.add(dto);
 						}
-						dtoList.add(dto);
+							
 					}
 					return dtoList;
 				} else return null;

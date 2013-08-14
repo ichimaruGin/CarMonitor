@@ -3,6 +3,8 @@ package org.zju.car_monitor.db;
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.Restrictions;
 import org.zju.car_monitor.util.Hibernate;
+import org.zju.car_monitor.util.ReadOnlyTask;
+import org.zju.car_monitor.util.XmlUtil;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -59,4 +61,32 @@ public class Department extends DbObject {
     public void setName(String name) {
         this.name = name;
     }
+    
+    public static String createDepartmentsXML() {
+        String xml = (String) Hibernate.readOnly(new ReadOnlyTask<String>() {
+            public String doWork() {
+                List<Department> departments = Department.findAllDepartments();
+                StringBuilder sb = new StringBuilder();
+                sb.append("<List>");
+
+                for(Department department: departments) {
+                	String parentId;
+                	if (department.getId().equals(department.getParentId())){
+                		parentId = "root";
+                	}else {
+                		parentId = department.getParentId();
+                	}
+                    sb.append("<department>");
+                    sb.append(XmlUtil.pair("name", department.getName()));
+                    sb.append(XmlUtil.pair("id", department.getId()));
+                    sb.append(XmlUtil.pair("parentId", parentId));
+                    sb.append("</department>");
+                }
+                sb.append("</List>");
+                return sb.toString();
+            }
+        });
+        return xml;
+    }
+
 }

@@ -8,7 +8,7 @@ public class DrunkDriveRecordXmlDS extends TerminalEventXmlDS{
 
 	public static DrunkDriveRecordXmlDS getInstance(String terminalId_) {
     	terminalId = terminalId_;
-    	dataType = Constants.EXCEPTION_CODE_TIRED_DRIVE;
+    	dataType = Constants.EXCEPTION_CODE_DRUNK;
     	eventType = Constants.EVENT_TYPE_EXCEPTION;
         if (instance == null) {
             instance = new DrunkDriveRecordXmlDS("DrunkDriveRecordXmlDS");

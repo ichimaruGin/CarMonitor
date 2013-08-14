@@ -39,7 +39,10 @@ public class TerminalEventWindow {
 		HLayout hlayout = new HLayout();
 		
 		ListGrid eventGrid = null; 
-		if (!hasProcessButton) eventGrid = new TerminalEventListGrid(ds); else eventGrid = new ExceptionListGrid(ds);
+		if (!hasProcessButton)
+			eventGrid = new TerminalEventListGrid(ds); 
+		else 
+			eventGrid = new ExceptionListGrid(ds);
 		ds.invalidateCache();
 		eventGrid.setAutoFetchData(true);
 		tab.setPane(hlayout);

@@ -1,4 +1,4 @@
-package org.zju.carmonitor.server;
+package org.zju.car_monitor.util;
 
 /**
  * @author jiezhen 7/24/13

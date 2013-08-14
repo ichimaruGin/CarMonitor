@@ -85,22 +85,26 @@ public class CarStatusViewPane extends TabSet {
 
 			public void onSuccess(List<ExceptionDataDto> result) {
 				if (result != null) {
-					boolean hasHighSpeedRecord = false;
-					boolean hasTiredDriveRecord = false;
-					boolean hasObdErrRecord = false;
+					ExceptionDataDto highSpeedDto = null;
+					ExceptionDataDto tireDriveDto = null;
+					ExceptionDataDto obdErrDto = null;
+					ExceptionDataDto drunkDto = null;
 					
 					for (ExceptionDataDto dto: result) {
 						if (dto.getCode().equals(Constants.EXCEPTION_CODE_HIGH_SPEED)) {
-							hasHighSpeedRecord = true;
+							highSpeedDto = dto;
 						} else if (dto.getCode().equals(Constants.EXCEPTION_CODE_TIRED_DRIVE)) {
-							hasTiredDriveRecord = true;
+							tireDriveDto = dto;
 						} else if (dto.getCode().equals(Constants.EXCEPTION_CODE_OBD_ERR)) {
-							hasObdErrRecord = true;
+							obdErrDto = dto;
+						} else if (dto.getCode().equals(Constants.EXCEPTION_CODE_DRUNK)) {
+							drunkDto = dto;
 						}
 					}
-					switchStyles(highSpeedButton, hasHighSpeedRecord);
-					switchStyles(tiredDriveButton, hasTiredDriveRecord);
-					switchStyles(errItem, hasObdErrRecord);
+					switchStyles(highSpeedButton, highSpeedDto);
+					switchStyles(tiredDriveButton, tireDriveDto);
+					switchStyles(errItem, obdErrDto);
+					switchStyles(drunkDriveButton, drunkDto);
 					
 				}
 				
@@ -110,9 +114,11 @@ public class CarStatusViewPane extends TabSet {
         
     }
 	
-	private void switchStyles(ButtonItem item, boolean colorFul) {
-		if (colorFul) {
-			item.setHint("有纪录!");
+	private void switchStyles(ButtonItem item, ExceptionDataDto dto) {
+		if (dto != null) {
+			String valueToShow = "最近未处理纪录: " + dto.getMessage() + " " + dto.getTime();
+			item.setHint(valueToShow);
+			item.setBaseStyle("redColor");
 			item.setHintStyle("redColor");
 		}else {
 			item.setHint("");
@@ -183,7 +189,7 @@ public class CarStatusViewPane extends TabSet {
 
 			public void onClick(ClickEvent event) {
 				DrunkDriveRecordXmlDS ds = DrunkDriveRecordXmlDS.getInstance(selectedTerminalId);
-				TerminalEventWindow window = new TerminalEventWindow("疲劳驾驶历史纪录", ds, true);
+				TerminalEventWindow window = new TerminalEventWindow("酒驾历史纪录", ds, true);
 				window.show();
 			}
         	

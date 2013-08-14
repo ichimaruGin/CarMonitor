@@ -10,6 +10,8 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.zju.car_monitor.client.Constants;
 import org.zju.car_monitor.util.Hibernate;
+import org.zju.car_monitor.util.ReadOnlyTask;
+import org.zju.car_monitor.util.XmlUtil;
 
 /**
  * @author jiezhen 7/21/13
@@ -41,5 +43,41 @@ public class CAT718TerminalEvent extends TerminalEvent{
 		if (list == null || list.size() == 0) return null;
 		return list;
 	}	
+	
+    public static String createCAT718EventsXML(final String terminalId, final String type) {
+  	String xml = (String) Hibernate.readOnly(new ReadOnlyTask<String>() {
+
+			public String doWork() {
+				List<CAT718TerminalEvent> list = CAT718TerminalEvent.findNoOfEvents(terminalId, 100);
+				StringBuilder builder = new StringBuilder();
+				builder.append("<List>");
+				
+				if (list != null) {
+					for (CAT718TerminalEvent event: list) {
+						builder.append("<event>");
+						TerminalEventAttrLong attr = TerminalEventAttrLong.getEventAttrLongByEventIdAndType(event.getId(), type);
+						builder.append(XmlUtil.pair("time", attr.getCreatedAt().toString()));
+						if (type.equals(Constants.CAR_SPEED_PARAM)) {
+							builder.append(XmlUtil.pair("value", attr.getAttrValue() + " 公里每小时"));
+						} else if (type.equals(Constants.CAR_RPM_PARAM)) {
+							builder.append(XmlUtil.pair("value", (attr.getAttrValue() /4) + " 转每分钟"));
+						} else if (type.equals(Constants.CAR_WATER_TEMP_PARAM)) {
+							builder.append(XmlUtil.pair("value", (attr.getAttrValue() - 40) + " 摄氏度"));
+						}
+						
+						builder.append("</event>");
+					}
+				}
+				builder.append("<List>");
+				
+				return builder.toString();
+				
+			}
+  		
+  	});
+  	
+  	return xml;
+  }
+
 	
 }

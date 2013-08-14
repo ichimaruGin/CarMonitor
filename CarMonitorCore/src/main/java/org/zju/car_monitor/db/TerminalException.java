@@ -14,6 +14,8 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.zju.car_monitor.client.Constants;
 import org.zju.car_monitor.util.Hibernate;
+import org.zju.car_monitor.util.ReadOnlyTask;
+import org.zju.car_monitor.util.XmlUtil;
 
 @Entity
 @Table(name = "terminal_exceptions")
@@ -75,24 +77,27 @@ public class TerminalException extends DbObject implements Constants{
 		this.processFlag = processFlag;
 	}
 	
-	public static List<TerminalException> findNoOfEvents(String terminalID, int number) {
+	public static List<TerminalException> findNoOfEventsByCode(String terminalID, int number, String code) {
 		Criteria c = Hibernate.currentSession().createCriteria(TerminalException.class).createAlias("terminal", "terminal")
-			.add(Restrictions.eq("terminal.terminalId", terminalID)).
-			addOrder(Order.desc("createdAt"));
+			.add(Restrictions.eq("terminal.terminalId", terminalID))
+			.add(Restrictions.eq("code", code))
+			.addOrder(Order.desc("createdAt"));
 		c.setMaxResults(number);
 		List<TerminalException> list = c.list();
 		if (list == null || list.size() == 0) return null;
 		return list;
 	}
 	
-	public static List<TerminalException> findUnProcessEvents(String terminalID) {
+	public static TerminalException findUnProcessEventsByCode(String terminalID, String code) {
 		
 		Criteria c = Hibernate.currentSession().createCriteria(TerminalException.class).createAlias("terminal", "terminal")
-				.add(Restrictions.eq("terminal.terminalId", terminalID)).add(Restrictions.eq("processFlag", "N")).
+				.add(Restrictions.eq("terminal.terminalId", terminalID)).add(Restrictions.eq("processFlag", "N"))
+				.add(Restrictions.eq("code",code)).
 				addOrder(Order.desc("createdAt"));
+			c.setMaxResults(1);
 			List<TerminalException> list = c.list();
 			if (list == null || list.size() == 0) return null;
-			return list;
+			return list.get(0);
 		
 	}
 	
@@ -103,5 +108,50 @@ public class TerminalException extends DbObject implements Constants{
 		e.saveOrUpdate();
 	}
 	
+	
+    public static String createExceptionsXML(final String terminalId, final String type) {
+    	String xml = (String) Hibernate.readOnly(new ReadOnlyTask<String>() {
+
+			public String doWork() {
+				List<TerminalException> list = TerminalException.findNoOfEventsByCode(terminalId, 100, type);
+				StringBuilder builder = new StringBuilder();
+				builder.append("<List>");
+				
+				if (list != null) {
+					for (TerminalException exception: list) {
+						builder.append("<event>");
+						builder.append(XmlUtil.pair("id", exception.getId()));
+						builder.append(XmlUtil.pair("time", exception.getCreatedAt().toString()));
+						if (type.equals(Constants.EXCEPTION_CODE_HIGH_SPEED)) {
+							builder.append(XmlUtil.pair("value", exception.getLongValue() + " 公里每小时"));
+						} else if (type.equals(Constants.EXCEPTION_CODE_TIRED_DRIVE)) {
+							builder.append(XmlUtil.pair("value",  exception.getLongValue() + " 分钟"));
+						} else if (type.equals(Constants.EXCEPTION_CODE_OBD_ERR)) {
+							builder.append(XmlUtil.pair("value", exception.getCharValue()));
+						} else if (type.equals(Constants.EXCEPTION_CODE_DRUNK)) {
+							builder.append(XmlUtil.pair("value", exception.getLongValue()));
+						}
+						String process;
+						if ("N".equals(exception.getProcessFlag())) {
+							process = "未处理";
+						}else {
+							process = "已处理";
+						}
+						builder.append(XmlUtil.pair("processFlag", process));
+						builder.append("</event>");
+					}
+				}
+				builder.append("<List>");
+				
+				return builder.toString();
+				
+			}
+    		
+    	});
+    	
+    	return xml;
+
+    }
+
 
 }

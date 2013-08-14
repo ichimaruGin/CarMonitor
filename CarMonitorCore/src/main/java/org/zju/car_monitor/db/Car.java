@@ -7,7 +7,8 @@ import javax.persistence.*;
 import org.hibernate.criterion.Restrictions;
 import org.zju.car_monitor.client.CarDto;
 import org.zju.car_monitor.util.Hibernate;
-
+import org.zju.car_monitor.util.ReadOnlyTask;
+import org.zju.car_monitor.util.XmlUtil;
 /**
  * @author jiezhen 7/17/13
  */
@@ -128,5 +129,33 @@ public class Car extends DbObject {
     	if (list == null || list.size() == 0) return null;
     		else return (Car) list.get(0);
     }
+    
+    public static String createCarsXML() {
+    	return (String) Hibernate.readOnly(new ReadOnlyTask<String>(){
+
+			public String doWork() {
+				List<Car> cars = Car.findAllCars();
+				StringBuilder sb = new StringBuilder();
+				sb.append("<List>");
+				for (Car car: cars) {
+					sb.append("<car>");
+					sb.append(XmlUtil.pair("departmentName", car.getDepartment().getLongName()));
+					sb.append(XmlUtil.pair("departmentId", car.getDepartment().getId()));
+					sb.append(XmlUtil.pair("terminalId", car.getTerminal().getTerminalId()));
+					sb.append(XmlUtil.pair("terminalId_", car.getTerminal().getId()));
+					sb.append(XmlUtil.pair("driverName",car.getDriverName()));
+					sb.append(XmlUtil.pair("driverPhone",car.getDriverPhone()));
+					sb.append(XmlUtil.pair("carType", car.getType()));
+					sb.append(XmlUtil.pair("carRegNumber", car.getRegNumber()));
+					sb.append("</car>");
+				}
+				sb.append("</List>");
+				
+				return sb.toString();
+			}
+    		
+    	});
+    }
+
 
 }

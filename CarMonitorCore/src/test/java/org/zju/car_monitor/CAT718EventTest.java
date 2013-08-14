@@ -15,7 +15,7 @@ import org.zju.car_monitor.server.TestServer;
 @RunWith(JUnit4.class)
 public class CAT718EventTest{
 
-    String message = "&CAT718#<00001>#<50>#<100>#<121>#<8000>#<20>#<0>#<0>#<0>#<0>#<0>#<0>!";
+    String message = "&CAT718#<00001>#<50>#<100>#<122>#<8000>#<20>#<0>#<0>#<0>#<0>#<0>#<0>!";
     private static Logger logger = Logger.getLogger(CAT718EventTest.class);
 
 //    public void prepare() {
