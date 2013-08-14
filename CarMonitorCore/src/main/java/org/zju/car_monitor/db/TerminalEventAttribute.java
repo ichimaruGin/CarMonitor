@@ -1,10 +1,15 @@
 package org.zju.car_monitor.db;
 
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import org.hibernate.criterion.Restrictions;
 import org.zju.car_monitor.util.Hibernate;
-
-import javax.persistence.*;
-import java.util.List;
 
 /**
  * @author jiezhen 7/20/13

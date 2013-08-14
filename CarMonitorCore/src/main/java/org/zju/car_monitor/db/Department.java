@@ -1,16 +1,16 @@
 package org.zju.car_monitor.db;
 
-import org.apache.log4j.Logger;
-import org.hibernate.criterion.Restrictions;
-import org.zju.car_monitor.util.Hibernate;
-import org.zju.car_monitor.util.ReadOnlyTask;
-import org.zju.car_monitor.util.XmlUtil;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import java.util.List;
+import org.apache.log4j.Logger;
+import org.hibernate.criterion.Restrictions;
+import org.zju.car_monitor.util.Hibernate;
+import org.zju.car_monitor.util.ReadOnlyTask;
+import org.zju.car_monitor.util.XmlUtil;
 
 /**
  * @author jiezhen 7/24/13

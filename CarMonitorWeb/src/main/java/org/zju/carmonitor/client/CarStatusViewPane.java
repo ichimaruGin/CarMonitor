@@ -5,23 +5,9 @@ package org.zju.carmonitor.client;
  */
 import java.util.List;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.smartgwt.client.types.Alignment;
-import com.smartgwt.client.types.VerticalAlignment;
-import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.*;
-import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
-import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
-import com.smartgwt.client.widgets.layout.VLayout;
-import com.smartgwt.client.widgets.tab.Tab;
-import com.smartgwt.client.widgets.tab.TabSet;
-import com.smartgwt.client.widgets.Label;
-
 import org.zju.car_monitor.client.CAT718TerminalEventDto;
-import org.zju.car_monitor.client.CATOBDTerminalEventDto;
-import org.zju.car_monitor.client.ExceptionDataDto;
 import org.zju.car_monitor.client.Constants;
+import org.zju.car_monitor.client.ExceptionDataDto;
 import org.zju.carmonitor.client.data.CarObdRecordXmlDS;
 import org.zju.carmonitor.client.data.CarRpmEventXmlDS;
 import org.zju.carmonitor.client.data.CarSpeedEventXmlDS;
@@ -29,6 +15,20 @@ import org.zju.carmonitor.client.data.CarWaterTempXmlDS;
 import org.zju.carmonitor.client.data.DrunkDriveRecordXmlDS;
 import org.zju.carmonitor.client.data.HighSpeedRecordXmlDS;
 import org.zju.carmonitor.client.data.TiredDriveRecordXmlDS;
+
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.types.VerticalAlignment;
+import com.smartgwt.client.widgets.Label;
+import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.ButtonItem;
+import com.smartgwt.client.widgets.form.fields.StaticTextItem;
+import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
+import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
+import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.tab.Tab;
+import com.smartgwt.client.widgets.tab.TabSet;
 
 public class CarStatusViewPane extends TabSet {
 	

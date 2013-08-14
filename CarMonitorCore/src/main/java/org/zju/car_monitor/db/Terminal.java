@@ -1,12 +1,13 @@
 package org.zju.car_monitor.db;
 
-import org.hibernate.criterion.Restrictions;
-import org.zju.car_monitor.util.Hibernate;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.List;
+
+import org.hibernate.criterion.Restrictions;
+import org.zju.car_monitor.util.Hibernate;
 
 /**
  * @author jiezhen 7/17/13

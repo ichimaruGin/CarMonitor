@@ -1,8 +1,8 @@
 package org.zju.car_monitor.client;
 
-import org.apache.log4j.Logger;
-
 import javax.xml.bind.DatatypeConverter;
+
+import org.apache.log4j.Logger;
 
 /**
  * User: jiezhen

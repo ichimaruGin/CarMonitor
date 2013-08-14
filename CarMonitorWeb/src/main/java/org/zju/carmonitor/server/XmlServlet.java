@@ -1,27 +1,18 @@
 package org.zju.carmonitor.server;
 
-import org.apache.log4j.Logger;
-import org.zju.car_monitor.client.Constants;
-import org.zju.car_monitor.db.CAT718EventAttribute;
-import org.zju.car_monitor.db.CAT718TerminalEvent;
-import org.zju.car_monitor.db.CATOBDTerminalEvent;
-import org.zju.car_monitor.db.Car;
-import org.zju.car_monitor.db.Department;
-import org.zju.car_monitor.db.DepartmentsCurdTest;
-import org.zju.car_monitor.db.TerminalEventAttrChar;
-import org.zju.car_monitor.db.TerminalEventAttrLong;
-import org.zju.car_monitor.db.TerminalException;
-import org.zju.car_monitor.util.Hibernate;
-import org.zju.car_monitor.util.ReadOnlyTask;
-import org.zju.car_monitor.util.XmlUtil;
+import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
-import java.util.List;
+import org.apache.log4j.Logger;
+import org.zju.car_monitor.client.Constants;
+import org.zju.car_monitor.db.CAT718TerminalEvent;
+import org.zju.car_monitor.db.Car;
+import org.zju.car_monitor.db.Department;
+import org.zju.car_monitor.db.TerminalException;
 
 /**
  * @author jiezhen 7/23/13

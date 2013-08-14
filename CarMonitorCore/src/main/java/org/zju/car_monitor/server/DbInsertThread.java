@@ -1,12 +1,12 @@
 package org.zju.car_monitor.server;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.zju.car_monitor.db.CarMonitorEventDao;
 import org.zju.car_monitor.model.Record;
 import org.zju.car_monitor.util.CopyOnReadList;
 import org.zju.car_monitor.util.CopyOnReadRecordList;
-
-import java.util.List;
 
 /**
  * User: jiezhen

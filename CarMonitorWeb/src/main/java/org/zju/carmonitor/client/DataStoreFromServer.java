@@ -3,9 +3,6 @@ package org.zju.carmonitor.client;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
-
-import org.apache.commons.collections.map.HashedMap;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

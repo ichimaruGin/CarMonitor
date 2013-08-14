@@ -1,11 +1,11 @@
 package org.zju.car_monitor.db;
 
+import java.io.Serializable;
+import java.util.UUID;
+
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.id.IdentifierGenerator;
-
-import java.io.Serializable;
-import java.util.UUID;
 
 /**
  * @author jiezhen 7/17/13

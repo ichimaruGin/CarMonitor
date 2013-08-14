@@ -1,9 +1,8 @@
 package org.zju.car_monitor.server;
 
-import org.apache.log4j.Logger;
-import org.zju.car_monitor.util.Config;
-
 import java.io.IOException;
+
+import org.apache.log4j.Logger;
 
 /**
  * User: jiezhen

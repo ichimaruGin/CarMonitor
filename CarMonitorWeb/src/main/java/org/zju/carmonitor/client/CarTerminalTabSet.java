@@ -1,7 +1,6 @@
 package org.zju.carmonitor.client;
 
 import com.smartgwt.client.types.Side;
-import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;

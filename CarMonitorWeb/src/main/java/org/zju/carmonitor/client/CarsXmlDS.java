@@ -6,10 +6,9 @@ package org.zju.carmonitor.client;
 import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.data.DataSourceField;
-import com.smartgwt.client.data.fields.*;
+import com.smartgwt.client.data.fields.DataSourceIntegerField;
+import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.types.FieldType;
-import com.smartgwt.client.widgets.form.validator.FloatPrecisionValidator;
-import com.smartgwt.client.widgets.form.validator.FloatRangeValidator;
 
 public class CarsXmlDS extends DataSource {
 

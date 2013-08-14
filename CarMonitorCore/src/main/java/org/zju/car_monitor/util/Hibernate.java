@@ -5,9 +5,19 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.zju.car_monitor.db.*;
-
-import java.util.Properties;
+import org.zju.car_monitor.db.CAT718EventAttribute;
+import org.zju.car_monitor.db.CAT718TerminalEvent;
+import org.zju.car_monitor.db.CATOBDEventAttribute;
+import org.zju.car_monitor.db.CATOBDTerminalEvent;
+import org.zju.car_monitor.db.Car;
+import org.zju.car_monitor.db.Department;
+import org.zju.car_monitor.db.Map;
+import org.zju.car_monitor.db.Terminal;
+import org.zju.car_monitor.db.TerminalEvent;
+import org.zju.car_monitor.db.TerminalEventAttrChar;
+import org.zju.car_monitor.db.TerminalEventAttrLong;
+import org.zju.car_monitor.db.TerminalEventAttribute;
+import org.zju.car_monitor.db.TerminalException;
 
 /**
  * @author jiezhen 7/17/13

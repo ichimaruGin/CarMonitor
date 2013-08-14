@@ -1,12 +1,10 @@
 package org.zju.car_monitor;
 
 import org.apache.log4j.Logger;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.zju.car_monitor.client.Client;
-import org.zju.car_monitor.server.TestServer;
 
 /**
  * @author jiezhen 7/21/13

@@ -1,8 +1,8 @@
 package org.zju.car_monitor.model;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.sql.Date;
 
 public class Uint16 {
 	byte[] bts;

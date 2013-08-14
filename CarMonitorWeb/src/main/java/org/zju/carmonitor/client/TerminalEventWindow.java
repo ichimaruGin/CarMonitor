@@ -1,7 +1,5 @@
 package org.zju.carmonitor.client;
 
-import org.zju.carmonitor.client.data.TerminalEventXmlDS;
-
 import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.grid.ListGrid;

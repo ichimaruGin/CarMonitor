@@ -2,7 +2,17 @@ package org.zju.car_monitor.util;
 
 import org.apache.log4j.Logger;
 import org.zju.car_monitor.client.Constants;
-import org.zju.car_monitor.db.*;
+import org.zju.car_monitor.db.CAT718EventAttribute;
+import org.zju.car_monitor.db.CAT718TerminalEvent;
+import org.zju.car_monitor.db.CATOBDEventAttribute;
+import org.zju.car_monitor.db.CATOBDTerminalEvent;
+import org.zju.car_monitor.db.EventType;
+import org.zju.car_monitor.db.Terminal;
+import org.zju.car_monitor.db.TerminalEvent;
+import org.zju.car_monitor.db.TerminalEventAttrChar;
+import org.zju.car_monitor.db.TerminalEventAttrLong;
+import org.zju.car_monitor.db.TerminalEventAttribute;
+import org.zju.car_monitor.db.TerminalException;
 
 /**
  * @author jiezhen 7/21/13

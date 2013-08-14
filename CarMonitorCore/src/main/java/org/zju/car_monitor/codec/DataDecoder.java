@@ -1,16 +1,13 @@
 package org.zju.car_monitor.codec;
 
+import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.CumulativeProtocolDecoder;
 import org.apache.mina.filter.codec.ProtocolDecoderOutput;
-import org.zju.car_monitor.model.Record;
-import org.zju.car_monitor.server.RecordParser;
-import org.zju.car_monitor.util.Config;
 import org.zju.car_monitor.util.EventProcessor;
-
-import java.util.ArrayList;
 
 /**
  * User: jiezhen
