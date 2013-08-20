@@ -13,6 +13,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.zju.car_monitor.client.Constants;
+import org.zju.car_monitor.util.CarCache;
 import org.zju.car_monitor.util.Hibernate;
 import org.zju.car_monitor.util.ReadOnlyTask;
 import org.zju.car_monitor.util.XmlUtil;
@@ -122,6 +123,11 @@ public class TerminalException extends DbObject implements Constants{
 						builder.append("<event>");
 						builder.append(XmlUtil.pair("id", exception.getId()));
 						builder.append(XmlUtil.pair("time", exception.getCreatedAt().toString()));
+						builder.append(XmlUtil.pair("terminal", exception.getTerminal().getTerminalId()));
+						Car car = CarCache.getCarByTerminalUUID(exception.getTerminal().getId());
+						builder.append(XmlUtil.pair("carRegNumber", car.getRegNumber()));
+						builder.append(XmlUtil.pair("carDriverName", car.getDriverName()));
+						
 						if (type.equals(Constants.EXCEPTION_CODE_HIGH_SPEED)) {
 							builder.append(XmlUtil.pair("value", exception.getLongValue() + " 公里每小时"));
 						} else if (type.equals(Constants.EXCEPTION_CODE_TIRED_DRIVE)) {

@@ -5,12 +5,15 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.zju.car_monitor.client.CAT718TerminalEventDto;
 import org.zju.car_monitor.client.CATOBDTerminalEventDto;
 import org.zju.car_monitor.client.CarDto;
 import org.zju.car_monitor.client.Constants;
 import org.zju.car_monitor.client.ExceptionDataDto;
+import org.zju.car_monitor.client.PositionDto;
 import org.zju.car_monitor.db.CAT718EventAttribute;
 import org.zju.car_monitor.db.CAT718TerminalEvent;
 import org.zju.car_monitor.db.CATOBDTerminalEvent;
@@ -152,9 +155,21 @@ public class CarMonitorUIServiceImpl extends RemoteServiceServlet implements Car
                         String attrCode = eventAttrChar.getAttribute().getAttrCode();
 
                         if (attrCode.equals(CAT718EventAttribute.CAR_LATITUDE)) {
-                            dto.setCurrentLatitude(eventAttrChar.getAttrValue());
+                        	String data = eventAttrChar.getAttrValue();
+                        	if (data!= null && data.length() == 10) {
+                        		String conv = data.substring(0, 2) + "." + data.substring(2, 4) + data.substring(5);
+                        		dto.setCurrentLatitude(conv);
+                        	} else {
+                        		dto.setCurrentLatitude("无效数据");
+                        	}
                         } else if (attrCode.equals(CAT718EventAttribute.CAR_LONGITUDE)) {
-                            dto.setCurrentLongitude(eventAttrChar.getAttrValue());
+                        	String data = eventAttrChar.getAttrValue();
+                        	if (data!= null && data.length() == 11) {
+                        		String conv = data.substring(0, 3) + "." + data.substring(3, 5) + data.substring(6);
+                        		dto.setCurrentLongitude(conv);
+                        	} else {
+                        		dto.setCurrentLongitude("无效数据");
+                        	}
                         }  else {
                             logger.error("unknown char attribute " + attrCode);
                         }
@@ -162,6 +177,7 @@ public class CarMonitorUIServiceImpl extends RemoteServiceServlet implements Car
 
                     dto.setEventType(EventType.CAR718.toString());
                     dto.setUpdatedTime(event.getUpdatedAt().toString());
+                    dto.setTerminalId(terminalId);
                     return dto;
 				} 
 			return null;
@@ -248,4 +264,15 @@ public class CarMonitorUIServiceImpl extends RemoteServiceServlet implements Car
 		});
 		
 	}
+
+
+	public void setDataParameter(String terminalId, String eventType,
+			String dataType) {
+		HttpSession session = this.getThreadLocalRequest().getSession();
+		session.setAttribute("terminalId", terminalId);
+		session.setAttribute("eventType", eventType);
+		session.setAttribute("dataType", dataType);
+	}
+
+
 }

@@ -8,6 +8,7 @@ import org.zju.car_monitor.client.CAT718TerminalEventDto;
 import org.zju.car_monitor.client.CATOBDTerminalEventDto;
 import org.zju.car_monitor.client.CarDto;
 import org.zju.car_monitor.client.ExceptionDataDto;
+import org.zju.car_monitor.client.PositionDto;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -33,4 +34,7 @@ public interface CarMonitorUIServiceAsync {
 			AsyncCallback<List<ExceptionDataDto>> callback);
 
 	void processException(String id, AsyncCallback<Void> callback);
+
+	void setDataParameter(String terminalId, String eventType, String dataType,
+			AsyncCallback<Void> callback);
 }

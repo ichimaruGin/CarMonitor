@@ -8,18 +8,13 @@ import java.util.List;
 import org.zju.car_monitor.client.CAT718TerminalEventDto;
 import org.zju.car_monitor.client.Constants;
 import org.zju.car_monitor.client.ExceptionDataDto;
-import org.zju.carmonitor.client.data.CarObdRecordXmlDS;
-import org.zju.carmonitor.client.data.CarRpmEventXmlDS;
-import org.zju.carmonitor.client.data.CarSpeedEventXmlDS;
-import org.zju.carmonitor.client.data.CarWaterTempXmlDS;
-import org.zju.carmonitor.client.data.DrunkDriveRecordXmlDS;
-import org.zju.carmonitor.client.data.HighSpeedRecordXmlDS;
-import org.zju.carmonitor.client.data.TiredDriveRecordXmlDS;
+import org.zju.carmonitor.client.data.TerminalEventXmlDS;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.VerticalAlignment;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.ButtonItem;
@@ -50,6 +45,8 @@ public class CarStatusViewPane extends TabSet {
 	private ButtonItem errItem = new ButtonItem("故障纪录");
 	
 	private String selectedTerminalId = null;
+	
+	private CAT718TerminalEventDto lastDto = null;
 
 	private void updateCurrentTime() {
 		eventUpdateTime.setContents("最近自动刷新时间:  " + format.format(new java.util.Date(System.currentTimeMillis())));
@@ -66,7 +63,8 @@ public class CarStatusViewPane extends TabSet {
                     speedTextItem.setValue(result.getCurrentSpeed());
                     rpmTextItem.setValue(result.getCurrentRpm());
                     waterTempTextItem.setValue(result.getCurrentWaterTemp());
-                    positionItem.setValue("(" + result.getCurrentLatitude() + "," + result.getCurrentLongitude() + ")");
+                    positionItem.setValue("(" + result.getCurrentLongitude() + "," + result.getCurrentLatitude() + ")");
+                    lastDto = result;
                 } else {
                 	speedTextItem.setValue("--");
                 	rpmTextItem.setValue("--");
@@ -145,7 +143,8 @@ public class CarStatusViewPane extends TabSet {
         speedButtonItem.setEndRow(false);
         speedButtonItem.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event) {
-				CarSpeedEventXmlDS ds = CarSpeedEventXmlDS.getInstance(selectedTerminalId);
+				TerminalEventXmlDS ds = TerminalEventXmlDS.getInstance(selectedTerminalId, 
+						Constants.EVENT_TYPE_CAT718, Constants.CAR_SPEED_PARAM, false);  
 				TerminalEventWindow window = new TerminalEventWindow("车速历史数据", ds, false);
 				window.show();
 			}
@@ -155,7 +154,8 @@ public class CarStatusViewPane extends TabSet {
         rpmButtonItem.setEndRow(false);
         rpmButtonItem.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event) {
-				CarRpmEventXmlDS ds = CarRpmEventXmlDS.getInstance(selectedTerminalId);
+				TerminalEventXmlDS ds = TerminalEventXmlDS.getInstance(selectedTerminalId, 
+						Constants.EVENT_TYPE_CAT718, Constants.CAR_RPM_PARAM, false);
 				TerminalEventWindow window = new TerminalEventWindow("转速历史数据", ds, false);
 				window.show();
 			}
@@ -166,7 +166,8 @@ public class CarStatusViewPane extends TabSet {
         highSpeedButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				HighSpeedRecordXmlDS ds = HighSpeedRecordXmlDS.getInstance(selectedTerminalId);
+				TerminalEventXmlDS ds = TerminalEventXmlDS.getInstance(selectedTerminalId, 
+						Constants.EVENT_TYPE_EXCEPTION, Constants.EXCEPTION_CODE_HIGH_SPEED, true);
 				TerminalEventWindow window = new TerminalEventWindow("超速历史纪录", ds, true);
 				window.show();
 			}
@@ -177,8 +178,9 @@ public class CarStatusViewPane extends TabSet {
         tiredDriveButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				TiredDriveRecordXmlDS ds = TiredDriveRecordXmlDS.getInstance(selectedTerminalId);
-				TerminalEventWindow window = new TerminalEventWindow("疲劳驾驶历史纪录", ds, true);
+				TerminalEventXmlDS ds = TerminalEventXmlDS.getInstance(selectedTerminalId, 
+						Constants.EVENT_TYPE_EXCEPTION, Constants.EXCEPTION_CODE_TIRED_DRIVE, true);
+		    	TerminalEventWindow window = new TerminalEventWindow("疲劳驾驶历史纪录", ds, true);
 				window.show();
 			}
         	
@@ -188,7 +190,8 @@ public class CarStatusViewPane extends TabSet {
         drunkDriveButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				DrunkDriveRecordXmlDS ds = DrunkDriveRecordXmlDS.getInstance(selectedTerminalId);
+				TerminalEventXmlDS ds = TerminalEventXmlDS.getInstance(selectedTerminalId, 
+						Constants.EVENT_TYPE_EXCEPTION, Constants.EXCEPTION_CODE_DRUNK, true);
 				TerminalEventWindow window = new TerminalEventWindow("酒驾历史纪录", ds, true);
 				window.show();
 			}
@@ -200,7 +203,8 @@ public class CarStatusViewPane extends TabSet {
         errItem.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				CarObdRecordXmlDS ds = CarObdRecordXmlDS.getInstance(selectedTerminalId);
+				TerminalEventXmlDS ds = TerminalEventXmlDS.getInstance(selectedTerminalId, 
+						Constants.EVENT_TYPE_EXCEPTION, Constants.EXCEPTION_CODE_OBD_ERR, true);
 				TerminalEventWindow window = new TerminalEventWindow("故障纪录", ds, true);
 				window.show();
 			}
@@ -211,7 +215,8 @@ public class CarStatusViewPane extends TabSet {
         waterTempButtonItem.setEndRow(false);
         waterTempButtonItem.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event) {
-				CarWaterTempXmlDS ds = CarWaterTempXmlDS.getInstance(selectedTerminalId);
+				TerminalEventXmlDS ds = TerminalEventXmlDS.getInstance(selectedTerminalId, 
+						Constants.EVENT_TYPE_CAT718, Constants.CAR_WATER_TEMP_PARAM, true);
 				TerminalEventWindow window = new TerminalEventWindow("水温历史数据", ds, false);
 				window.show();
 			}
@@ -219,6 +224,19 @@ public class CarStatusViewPane extends TabSet {
         });
         
         positionButtonItem.setEndRow(false);
+        positionButtonItem.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				if (lastDto == null || !lastDto.getTerminalId().equals(selectedTerminalId)) {
+					SC.say("无位置数据");
+				} else {
+					final MapHtmlPane pane = new MapHtmlPane(lastDto.getCurrentLongitude(), lastDto.getCurrentLatitude());
+				}
+				
+			}
+        	
+        });
+        
         highSpeedButton.setValue("无");
         tiredDriveButton.setValue("无");
         drunkDriveButton.setValue("无");

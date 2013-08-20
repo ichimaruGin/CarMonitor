@@ -3,13 +3,14 @@ package org.zju.car_monitor.client;
 
 public class CAT718TerminalEventDto extends DtoAbstract{
 	
+	private String terminalId = null;
 	private String eventType = null;
 	private String updatedTime = null;
 	private String currentSpeed = null;
 	private String currentRpm = null;
 	private String currentWaterTemp = null;
 	private String currentLatitude = null;
-
+	
     public String getCurrentLongitude() {
         return currentLongitude;
     }
@@ -55,6 +56,14 @@ public class CAT718TerminalEventDto extends DtoAbstract{
 	}
 	public void setCurrentLatitude(String currentLatitude) {
 		this.currentLatitude = currentLatitude;
+	}
+
+	public String getTerminalId() {
+		return terminalId;
+	}
+
+	public void setTerminalId(String terminalId) {
+		this.terminalId = terminalId;
 	}
 	
 

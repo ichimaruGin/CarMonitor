@@ -39,7 +39,7 @@ public class ExceptionListGrid extends TerminalEventListGrid{
 	@Override
 	 protected Canvas createRecordComponent(final ListGridRecord record, Integer colNum) {
 		String fieldName = this.getFieldName(colNum);
-		if (fieldName.equals("processButton")) {
+		if (fieldName.equals("processButton") && record.getAttribute("processFlag").equals("未处理")) {
 		    return new ProcessButton(this, record);  
 		} else {
 			return null;			
@@ -53,7 +53,7 @@ class ProcessButton extends IButton {
 	
 	public ProcessButton(final ListGrid listGrid, final ListGridRecord record) {
         this.setHeight(18);  
-        this.setWidth(80);                      
+        this.setWidth(80);
         this.setTitle("设为已处理");  
         this.addClickHandler(new ClickHandler() {  
             public void onClick(ClickEvent event) {

@@ -8,6 +8,7 @@ import org.zju.car_monitor.client.CAT718TerminalEventDto;
 import org.zju.car_monitor.client.CATOBDTerminalEventDto;
 import org.zju.car_monitor.client.CarDto;
 import org.zju.car_monitor.client.ExceptionDataDto;
+import org.zju.car_monitor.client.PositionDto;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -29,6 +30,8 @@ public interface CarMonitorUIService extends RemoteService {
     CATOBDTerminalEventDto getCATOBDTerminalEvent(String terminalId);
     
     List<ExceptionDataDto> getExceptionDataList(String terminalId);
+    
+    void setDataParameter(String terminalId, String eventType, String dataType);
     
     void processException(String id);
     

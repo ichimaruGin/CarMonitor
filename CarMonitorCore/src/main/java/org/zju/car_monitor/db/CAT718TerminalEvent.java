@@ -9,6 +9,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.zju.car_monitor.client.Constants;
+import org.zju.car_monitor.util.CarCache;
 import org.zju.car_monitor.util.Hibernate;
 import org.zju.car_monitor.util.ReadOnlyTask;
 import org.zju.car_monitor.util.XmlUtil;
@@ -56,6 +57,10 @@ public class CAT718TerminalEvent extends TerminalEvent{
 					for (CAT718TerminalEvent event: list) {
 						builder.append("<event>");
 						TerminalEventAttrLong attr = TerminalEventAttrLong.getEventAttrLongByEventIdAndType(event.getId(), type);
+						builder.append(XmlUtil.pair("terminal", event.getTerminal().getTerminalId()));
+						Car car = CarCache.getCarByTerminalUUID(event.getTerminal().getId());
+						builder.append(XmlUtil.pair("carRegNumber", car.getRegNumber()));
+						builder.append(XmlUtil.pair("carDriverName", car.getDriverName()));
 						builder.append(XmlUtil.pair("time", attr.getCreatedAt().toString()));
 						if (type.equals(Constants.CAR_SPEED_PARAM)) {
 							builder.append(XmlUtil.pair("value", attr.getAttrValue() + " 公里每小时"));

@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.zju.car_monitor.client.Constants;
@@ -27,15 +28,18 @@ public class XmlServlet extends HttpServlet {
         if (req != null){
             resp.setCharacterEncoding("UTF-8");
             String para = req.getParameter("param");
-            logger.info("URL Param: " + para);
             if (para.equals("departments")) {
                 resp.getWriter().write(Department.createDepartmentsXML());
             } else if (para.equals("cars")) {
             	resp.getWriter().write(Car.createCarsXML());
             } else if (para.equals("events")){
-            	String eventType = req.getParameter("eventType");
-            	String type = req.getParameter("dataType");
-            	String terminalId = req.getParameter("terminalId");
+            	
+            	HttpSession httpSession = req.getSession();
+            	
+            	String eventType = (String) httpSession.getAttribute("eventType");
+            	String type = (String) httpSession.getAttribute("dataType");
+            	String terminalId = (String) httpSession.getAttribute("terminalId");
+            	
             	if (Constants.EVENT_TYPE_CAT718.equals(eventType)) {
             		resp.getWriter().write(CAT718TerminalEvent.createCAT718EventsXML(terminalId, type));
             	} else if (Constants.EVENT_TYPE_EXCEPTION.equals(eventType)) {

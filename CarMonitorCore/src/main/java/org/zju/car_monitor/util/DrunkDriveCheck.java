@@ -4,7 +4,7 @@ import org.zju.car_monitor.db.TerminalException;
 
 public class DrunkDriveCheck {
 	
-	public static long MAX_DRUNK_VALUE = 600;
+	public static long MAX_DRUNK_VALUE = 750;
 	
 	private static boolean lastIsDrunk = false;
 	
