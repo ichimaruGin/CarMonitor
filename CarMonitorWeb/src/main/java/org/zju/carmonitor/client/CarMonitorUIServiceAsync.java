@@ -8,7 +8,6 @@ import org.zju.car_monitor.client.CAT718TerminalEventDto;
 import org.zju.car_monitor.client.CATOBDTerminalEventDto;
 import org.zju.car_monitor.client.CarDto;
 import org.zju.car_monitor.client.ExceptionDataDto;
-import org.zju.car_monitor.client.PositionDto;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

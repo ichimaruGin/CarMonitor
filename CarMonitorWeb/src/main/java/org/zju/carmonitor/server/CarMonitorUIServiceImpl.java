@@ -13,7 +13,6 @@ import org.zju.car_monitor.client.CATOBDTerminalEventDto;
 import org.zju.car_monitor.client.CarDto;
 import org.zju.car_monitor.client.Constants;
 import org.zju.car_monitor.client.ExceptionDataDto;
-import org.zju.car_monitor.client.PositionDto;
 import org.zju.car_monitor.db.CAT718EventAttribute;
 import org.zju.car_monitor.db.CAT718TerminalEvent;
 import org.zju.car_monitor.db.CATOBDTerminalEvent;
