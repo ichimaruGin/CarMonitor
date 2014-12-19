@@ -1,0 +1,2 @@
+serviceClass: org.zju.carmonitor.client.CarMonitorUIService
+path: 28C5EF7310654659F1641E719243D62E.gwt.rpc

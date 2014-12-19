@@ -2,8 +2,27 @@
 <project name="CarMonitor" default="build" basedir=".">
   <!-- Arguments to gwtc and devmode targets -->
   <property name="gwt.args" value="" />
-
+	
+  <property name="gwt_path" value="D:\java EE安装软件\gwt-2.5.1"></property>	
+  <property name="windows_m2_path" value="F:\javaEE\apache-maven-3.2.1\repository"></property>
+		
+	  <property name="gwt.sdk" location="${gwt_path}" />
+	  <property name="car-dir" location="${windows_m2_path}\CarMonitor\CarMonitorCore\1.0"/>
+	  <property name="log4j-dir" location="${windows_m2_path}\log4j\log4j\1.2.17"/>
+	  <property name="slf4j-dir" location="${windows_m2_path}\org\slf4j\slf4j-api\1.7.5"/>
+	  <property name="dom-4j" location="${windows_m2_path}\dom4j\dom4j\1.6.1"/>
+	  <property name="commons-dir" location="${windows_m2_path}\commons-io\commons-io\1.3.2"/>
+	  <property name="hibernate-dir" location="${windows_m2_path}\org\hibernate\hibernate-core\4.2.3.Final"/>
+	  <property name="c3p0-dir" location="${windows_m2_path}\org\hibernate\hibernate-c3p0\4.2.3.Final"/>
+	  <property name="junit-dir" location="${windows_m2_path}\junit\junit\4.11"/>
+	  <property name="mysql-dir" location="${windows_m2_path}\mysql\mysql-connector-java\5.1.25"/>
+	  <property name="smart-dir" location="${windows_m2_path}\com\smartgwt\smartgwt\2.4"/>
+	  <property name="smart-skin-dir" location="${windows_m2_path}\com\smartgwt\smartgwt-skins\2.4\"/>
+	  <property name="jpa-dir" location="${windows_m2_path}\org\hibernate\javax\persistence\hibernate-jpa-2.0-api"/>
+	  <property name="hibernate-an-dir" location="${windows_m2_path}\org\hibernate\common\hibernate-commons-annotations\4.0.2.Final"/>
+	  <property name="jboss-logging" location="${windows_m2_path}\org\jboss\logging\jboss-logging\3.1.0.GA"/>
   <!-- Configure path to GWT SDK -->
+	<!--
   <property name="gwt.sdk" location="/usr/local/Library/gwt-2.5.1/" />
   <property name="car-dir" location="${user.home}/.m2/repository/CarMonitor/CarMonitorCore/1.0/"/>
   <property name="log4j-dir" location="${user.home}/.m2/repository/log4j/log4j/1.2.17/"/>
@@ -19,7 +38,7 @@
   <property name="jpa-dir" location="${user.home}/.m2/repository/org/hibernate/javax/persistence/hibernate-jpa-2.0-api/"/>
   <property name="hibernate-an-dir" location="${user.home}/.m2/repository/org/hibernate/common/hibernate-commons-annotations/4.0.2.Final/"/>
   <property name="jboss-logging" location="${user.home}/.m2/repository/org/jboss/logging/jboss-logging/3.1.0.GA/"/>
-
+-->
 
     <path id="project.class.path">
     <pathelement location="src/main/java"/>
@@ -31,23 +50,23 @@
 
   <target name="libs" description="Copy libs to WEB-INF/lib">
     <mkdir dir="war/WEB-INF/lib" />
-    <!--<copy todir="war/WEB-INF/lib" file="${gwt.sdk}/gwt-servlet.jar" />-->
-    <!--<copy todir="war/WEB-INF/lib" file="${gwt.sdk}/gwt-servlet-deps.jar" />-->
+    	<copy todir="war/WEB-INF/lib" file="${gwt.sdk}/gwt-servlet.jar" />
+    	<copy todir="war/WEB-INF/lib" file="${gwt.sdk}/gwt-servlet-deps.jar" />
       <copy todir="war/WEB-INF/lib" file="${car-dir}/CarMonitorCore-1.0.jar" />
-      <!--<copy todir="war/WEB-INF/lib" file="${car-dir}/CarMonitorCore-1.0.jar" />-->
-      <!--<copy todir="war/WEB-INF/lib" file="${hibernate-an-dir}/hibernate-commons-annotations-4.0.2.Final.jar" />-->
-      <!--<copy todir="war/WEB-INF/lib" file="${log4j-dir}/log4j-1.2.17.jar" />-->
-      <!--<copy todir="war/WEB-INF/lib" file="${slf4j-dir}/slf4j-api-1.7.5.jar" />-->
-      <!--<copy todir="war/WEB-INF/lib" file="${commons-dir}/commons-io-1.3.2.jar" />-->
-      <!--<copy todir="war/WEB-INF/lib" file="${hibernate-dir}/hibernate-core-4.2.3.Final.jar" />-->
-      <!--<copy todir="war/WEB-INF/lib" file="${c3p0-dir}/hibernate-c3p0-4.2.3.Final.jar" />-->
-      <!--<copy todir="war/WEB-INF/lib" file="${junit-dir}/junit-4.11.jar" />-->
-      <!--<copy todir="war/WEB-INF/lib" file="${jboss-logging}/jboss-logging-3.1.0.GA.jar" />-->
-      <!--<copy todir="war/WEB-INF/lib" file="${mysql-dir}/mysql-connector-java-5.1.25.jar" />-->
-      <!--<copy todir="war/WEB-INF/lib" file="${smart-dir}/smartgwt-2.4.jar" />-->
-      <!--<copy todir="war/WEB-INF/lib" file="${smart-skin-dir}/smartgwt-skins-2.4.jar" />-->
-      <!--<copy todir="war/WEB-INF/lib" file="${jpa-dir}/1.0.1.Final/hibernate-jpa-2.0-api-1.0.1.Final.jar" />-->
-      <!--<copy todir="war/WEB-INF/lib" file="${dom-4j}/dom4j-1.6.1.jar" />-->
+      <copy todir="war/WEB-INF/lib" file="${car-dir}/CarMonitorCore-1.0.jar" />
+      <copy todir="war/WEB-INF/lib" file="${hibernate-an-dir}/hibernate-commons-annotations-4.0.2.Final.jar" />
+      <copy todir="war/WEB-INF/lib" file="${log4j-dir}/log4j-1.2.17.jar" />
+      <copy todir="war/WEB-INF/lib" file="${slf4j-dir}/slf4j-api-1.7.5.jar" />
+      <copy todir="war/WEB-INF/lib" file="${commons-dir}/commons-io-1.3.2.jar" />
+      <copy todir="war/WEB-INF/lib" file="${hibernate-dir}/hibernate-core-4.2.3.Final.jar" />
+      <copy todir="war/WEB-INF/lib" file="${c3p0-dir}/hibernate-c3p0-4.2.3.Final.jar" />
+      <copy todir="war/WEB-INF/lib" file="${junit-dir}/junit-4.11.jar" />
+      <copy todir="war/WEB-INF/lib" file="${jboss-logging}/jboss-logging-3.1.0.GA.jar" />
+      <copy todir="war/WEB-INF/lib" file="${mysql-dir}/mysql-connector-java-5.1.25.jar" />
+      <copy todir="war/WEB-INF/lib" file="${smart-dir}/smartgwt-2.4.jar" />
+      <copy todir="war/WEB-INF/lib" file="${smart-skin-dir}/smartgwt-skins-2.4.jar" />
+      <copy todir="war/WEB-INF/lib" file="${jpa-dir}/1.0.1.Final/hibernate-jpa-2.0-api-1.0.1.Final.jar" />
+      <copy todir="war/WEB-INF/lib" file="${dom-4j}/dom4j-1.6.1.jar" />
       
       <copy todir="war/WEB-INF/lib" >
           <fileset dir="../lib/">

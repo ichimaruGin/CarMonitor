@@ -1,0 +1,24 @@
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.0//EN"
+        "http://google-web-toolkit.googlecode.com/svn/releases/2.0/distro-source/core/src/gwt-module.dtd">
+<module rename-to="CarMonitorUI">
+
+    <!-- Inherit the core Web Toolkit stuff.                  -->
+    <inherits name='com.google.gwt.user.User'/>
+
+
+    <!-- Inherit the Smart GWT  -->
+    <inherits name="com.smartgwt.SmartGwt"/>
+
+    <inherits name="com.smartclient.theme.enterpriseblue.EnterpriseBlue"/>
+
+    <inherits name="com.smartgwt.tools.SmartGwtTools"/>
+    
+    <inherits name="org.zju.car_monitor.CarMonitorCore"/>
+
+    <!-- Specify the app entry point class.                   -->
+    <entry-point class='org.zju.carmonitor.client.CarMonitorUI'/>
+
+    <!-- Specify the app servlets.                   -->
+    <servlet path='/CarMonitorUIService' class='org.zju.carmonitor.server.CarMonitorUIServiceImpl'/>
+
+</module>

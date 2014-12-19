@@ -1,8 +1,8 @@
 set charset "utf8";
 drop database if exists `car_monitor_db`;
 create database `car_monitor_db` character set utf8 collate utf8_unicode_ci;
-create user `car_db_user` IDENTIFIED by 'password';
-grant all on `car_monitor_db`.* to `car_db_user`@`localhost`;
+grant all privileges on `car_monitor_db`.* to `car_db_user`@`localhost` identified by 'password';
+flush privileges; 
 use `car_monitor_db`;
 drop table if exists `departments`;
 create table `departments` (
