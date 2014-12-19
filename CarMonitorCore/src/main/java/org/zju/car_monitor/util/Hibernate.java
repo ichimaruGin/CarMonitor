@@ -48,19 +48,21 @@ public class Hibernate {
             
             logger.info("After adding classes");
             configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
-            configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/car_monitor_db?useUnicode=true&amp;characterEncoding=UTF-8");
+            configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/car_monitor_db?useUnicode=true&amp;characterEncoding=UTF-8");        
             configuration.setProperty("hibernate.connection.charSet", "utf8");
             configuration.setProperty("hibernate.connection.characterEncoding", "utf8");
             configuration.setProperty("hibernate.connection.characterSetResults", "utf8");
             configuration.setProperty("hibernate.connection.connectionCollation", "utf8_unicode_ci");
             configuration.setProperty("hibernate.connection.useUnicode", "true");
-            configuration.setProperty("hibernate.connection.username","car_db_user");
-            configuration.setProperty("hibernate.connection.password","password");
+            //configuration.setProperty("hibernate.connection.username","car_db_user");
+            configuration.setProperty("hibernate.connection.username","root");
+            //configuration.setProperty("hibernate.connection.password","password");
+            configuration.setProperty("hibernate.connection.password","zjulab410");
             configuration.setProperty("hibernate.c3p0.min_size", "5");
             configuration.setProperty("hibernate.c3p0.max_size", "20");
             configuration.setProperty("hibernate.c3p0.timeout","1800");
             configuration.setProperty("hibernate.c3p0.max_statements", "50");
-            configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLInnoDBDialect");
+            configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLInnoDBDialect");         
             logger.info("After setting properties");
             factory = configuration.buildSessionFactory();
             logger.info("End creating factory");
