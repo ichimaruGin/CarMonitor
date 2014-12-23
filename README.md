@@ -24,3 +24,5 @@ CarMonitor
 rm -rf CarMonitor;
 unzip CarMonitor.war -d CarMonitor;即可
 
+http://115.239.182.18:9090/CarMonitor/
+
