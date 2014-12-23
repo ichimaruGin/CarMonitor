@@ -2190,3 +2190,52 @@ java.sql.SQLException: Access denied for user 'car_db_user'@'localhost' (using p
 2014-12-19 21:23:30,571 INFO  org.zju.car_monitor.util.EventProcessor.process:29 - Process event: &CAT718#<00001>#<50>#<100>#<120>#<2000>#<10>#<Y>#<33.00>#<34.00>#<0>#<0>#<0>!
 2014-12-19 21:23:30,573 INFO  org.zju.car_monitor.util.EventProcessor.decodeAndSaveCAT718:136 - Saved CAT718 terminalEvent for terminalId 00001
 2014-12-19 21:25:40,067 INFO  org.apache.mina.core.service.IoHandlerAdapter.sessionClosed:37 - session closed: (0x00000001: nio socket, server, /127.0.0.1:54835 => 0.0.0.0/0.0.0.0:7001)
+2014-12-23 15:27:22,827 INFO  org.zju.car_monitor.server.ServerSocketAcceptor.start:28 - started acceptor, binding to address 7001
+2014-12-23 15:27:22,855 INFO  org.zju.car_monitor.server.Server.start:26 - server socket acceptor started.
+2014-12-23 15:28:04,757 INFO  org.apache.mina.core.service.IoHandlerAdapter.sessionOpened:31 - session opened: (0x00000001: nio socket, server, /127.0.0.1:52687 => /127.0.0.1:7001)
+2014-12-23 15:28:07,171 INFO  org.zju.car_monitor.codec.DataDecoder.doDecode:60 - In doDecode
+2014-12-23 15:28:07,172 INFO  org.zju.car_monitor.codec.DataDecoder.doDecode:62 - Receiving 77 bytes
+2014-12-23 15:28:07,251 INFO  org.zju.car_monitor.util.EventProcessor.process:29 - Process event: &CAT718#<00001>#<5E>#<100>#<120>#<2000>#<10>#<Y>#<33.00>#<34.00>#<0>#<0>#<0>!
+2014-12-23 15:28:07,281 INFO  org.zju.car_monitor.util.Hibernate.<clinit>:33 - Start to initializing Hibernate
+2014-12-23 15:28:07,727 INFO  org.zju.car_monitor.util.Hibernate.<clinit>:49 - After adding classes
+2014-12-23 15:28:07,728 INFO  org.zju.car_monitor.util.Hibernate.<clinit>:66 - After setting properties
+2014-12-23 15:28:07,890 INFO  com.mchange.v2.log.MLog.<clinit>:92 - MLog clients using log4j logging.
+2014-12-23 15:28:08,144 INFO  com.mchange.v2.c3p0.C3P0Registry.banner:216 - Initializing c3p0-0.9.2.1 [built 20-March-2013 10:47:27 +0000; debug? true; trace: 10]
+2014-12-23 15:28:08,257 INFO  com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource.getPoolManager:522 - Initializing c3p0 pool... com.mchange.v2.c3p0.PoolBackedDataSource@73738d34 [ connectionPoolDataSource -> com.mchange.v2.c3p0.WrapperConnectionPoolDataSource@50b3548f [ acquireIncrement -> 3, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, debugUnreturnedConnectionStackTraces -> false, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 1mawpps96wr4kco6qvb4a|735fda93, idleConnectionTestPeriod -> 0, initialPoolSize -> 3, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 1800, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 20, maxStatements -> 50, maxStatementsPerConnection -> 0, minPoolSize -> 5, nestedDataSource -> com.mchange.v2.c3p0.DriverManagerDataSource@51501339 [ description -> null, driverClass -> null, factoryClassLocation -> null, identityToken -> 1mawpps96wr4kco6qvb4a|6558f08f, jdbcUrl -> jdbc:mysql://localhost:3306/car_monitor_db?useUnicode=true&amp;characterEncoding=UTF-8, properties -> {useUnicode=true, user=******, password=******, characterEncoding=utf8, charSet=utf8, connectionCollation=utf8_unicode_ci, characterSetResults=utf8} ], preferredTestQuery -> null, propertyCycle -> 0, statementCacheNumDeferredCloseThreads -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false; userOverrides: {} ], dataSourceName -> null, factoryClassLocation -> null, identityToken -> 1mawpps96wr4kco6qvb4a|50c50bee, numHelperThreads -> 3 ]
+2014-12-23 15:28:09,463 INFO  org.zju.car_monitor.util.Hibernate.<clinit>:68 - End creating factory
+2014-12-23 15:28:09,718 INFO  org.zju.car_monitor.util.EventProcessor.decodeAndSaveCAT718:136 - Saved CAT718 terminalEvent for terminalId 00001
+2014-12-23 15:32:16,490 INFO  org.zju.car_monitor.server.ServerSocketAcceptor.start:28 - started acceptor, binding to address 7001
+2014-12-23 15:32:16,507 INFO  org.zju.car_monitor.server.Server.start:26 - server socket acceptor started.
+2014-12-23 15:32:21,803 INFO  org.apache.mina.core.service.IoHandlerAdapter.sessionOpened:31 - session opened: (0x00000001: nio socket, server, /127.0.0.1:52779 => /127.0.0.1:7001)
+2014-12-23 15:32:23,914 INFO  org.zju.car_monitor.codec.DataDecoder.doDecode:60 - In doDecode
+2014-12-23 15:32:23,915 INFO  org.zju.car_monitor.codec.DataDecoder.doDecode:62 - Receiving 77 bytes
+2014-12-23 15:32:23,922 INFO  org.zju.car_monitor.util.EventProcessor.process:29 - Process event: &CAT718#<00001>#<5E>#<100>#<120>#<2000>#<10>#<Y>#<33.00>#<34.00>#<0>#<0>#<0>!
+2014-12-23 15:32:23,925 INFO  org.zju.car_monitor.util.Hibernate.<clinit>:33 - Start to initializing Hibernate
+2014-12-23 15:32:24,130 INFO  org.zju.car_monitor.util.Hibernate.<clinit>:49 - After adding classes
+2014-12-23 15:32:24,131 INFO  org.zju.car_monitor.util.Hibernate.<clinit>:66 - After setting properties
+2014-12-23 15:32:24,215 INFO  com.mchange.v2.log.MLog.<clinit>:92 - MLog clients using log4j logging.
+2014-12-23 15:32:24,345 INFO  com.mchange.v2.c3p0.C3P0Registry.banner:216 - Initializing c3p0-0.9.2.1 [built 20-March-2013 10:47:27 +0000; debug? true; trace: 10]
+2014-12-23 15:32:24,448 INFO  com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource.getPoolManager:522 - Initializing c3p0 pool... com.mchange.v2.c3p0.PoolBackedDataSource@a4430e03 [ connectionPoolDataSource -> com.mchange.v2.c3p0.WrapperConnectionPoolDataSource@bba4fa05 [ acquireIncrement -> 3, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, debugUnreturnedConnectionStackTraces -> false, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 1mawpps96wra24fjwyg6u|4db87b69, idleConnectionTestPeriod -> 0, initialPoolSize -> 3, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 1800, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 20, maxStatements -> 50, maxStatementsPerConnection -> 0, minPoolSize -> 5, nestedDataSource -> com.mchange.v2.c3p0.DriverManagerDataSource@efc0341b [ description -> null, driverClass -> null, factoryClassLocation -> null, identityToken -> 1mawpps96wra24fjwyg6u|159409c9, jdbcUrl -> jdbc:mysql://localhost:3306/car_monitor_db?useUnicode=true&amp;characterEncoding=UTF-8, properties -> {useUnicode=true, user=******, password=******, characterEncoding=utf8, charSet=utf8, connectionCollation=utf8_unicode_ci, characterSetResults=utf8} ], preferredTestQuery -> null, propertyCycle -> 0, statementCacheNumDeferredCloseThreads -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false; userOverrides: {} ], dataSourceName -> null, factoryClassLocation -> null, identityToken -> 1mawpps96wra24fjwyg6u|2e3cd8fe, numHelperThreads -> 3 ]
+2014-12-23 15:32:25,134 INFO  org.zju.car_monitor.util.Hibernate.<clinit>:68 - End creating factory
+2014-12-23 15:32:25,273 INFO  org.zju.car_monitor.util.EventProcessor.decodeAndSaveCAT718:137 - Saved CAT718 terminalEvent for terminalId 00001
+2014-12-23 15:32:27,450 INFO  org.zju.car_monitor.codec.DataDecoder.doDecode:60 - In doDecode
+2014-12-23 15:32:27,450 INFO  org.zju.car_monitor.codec.DataDecoder.doDecode:62 - Receiving 77 bytes
+2014-12-23 15:32:27,453 INFO  org.zju.car_monitor.util.EventProcessor.process:29 - Process event: &CAT718#<00001>#<5E>#<100>#<120>#<2000>#<10>#<Y>#<33.00>#<34.00>#<0>#<0>#<0>!
+2014-12-23 15:32:27,455 INFO  org.zju.car_monitor.util.EventProcessor.decodeAndSaveCAT718:137 - Saved CAT718 terminalEvent for terminalId 00001
+2014-12-23 15:32:31,880 INFO  org.zju.car_monitor.codec.DataDecoder.doDecode:60 - In doDecode
+2014-12-23 15:32:31,880 INFO  org.zju.car_monitor.codec.DataDecoder.doDecode:62 - Receiving 77 bytes
+2014-12-23 15:32:31,880 INFO  org.zju.car_monitor.util.EventProcessor.process:29 - Process event: &CAT718#<00001>#<5E>#<100>#<120>#<2000>#<10>#<Y>#<33.00>#<34.00>#<0>#<0>#<0>!
+2014-12-23 15:32:31,882 INFO  org.zju.car_monitor.util.EventProcessor.decodeAndSaveCAT718:137 - Saved CAT718 terminalEvent for terminalId 00001
+2014-12-23 15:32:33,889 INFO  org.zju.car_monitor.codec.DataDecoder.doDecode:60 - In doDecode
+2014-12-23 15:32:33,889 INFO  org.zju.car_monitor.codec.DataDecoder.doDecode:62 - Receiving 77 bytes
+2014-12-23 15:32:33,890 INFO  org.zju.car_monitor.util.EventProcessor.process:29 - Process event: &CAT718#<00001>#<5E>#<100>#<120>#<2000>#<10>#<Y>#<33.00>#<34.00>#<0>#<0>#<0>!
+2014-12-23 15:32:33,892 INFO  org.zju.car_monitor.util.EventProcessor.decodeAndSaveCAT718:137 - Saved CAT718 terminalEvent for terminalId 00001
+2014-12-23 15:32:35,040 INFO  org.zju.car_monitor.codec.DataDecoder.doDecode:60 - In doDecode
+2014-12-23 15:32:35,040 INFO  org.zju.car_monitor.codec.DataDecoder.doDecode:62 - Receiving 77 bytes
+2014-12-23 15:32:35,041 INFO  org.zju.car_monitor.util.EventProcessor.process:29 - Process event: &CAT718#<00001>#<5E>#<100>#<120>#<2000>#<10>#<Y>#<33.00>#<34.00>#<0>#<0>#<0>!
+2014-12-23 15:32:35,043 INFO  org.zju.car_monitor.util.EventProcessor.decodeAndSaveCAT718:137 - Saved CAT718 terminalEvent for terminalId 00001
+2014-12-23 15:32:36,232 INFO  org.zju.car_monitor.codec.DataDecoder.doDecode:60 - In doDecode
+2014-12-23 15:32:36,232 INFO  org.zju.car_monitor.codec.DataDecoder.doDecode:62 - Receiving 77 bytes
+2014-12-23 15:32:36,233 INFO  org.zju.car_monitor.util.EventProcessor.process:29 - Process event: &CAT718#<00001>#<5E>#<100>#<120>#<2000>#<10>#<Y>#<33.00>#<34.00>#<0>#<0>#<0>!
+2014-12-23 15:32:36,235 INFO  org.zju.car_monitor.util.EventProcessor.decodeAndSaveCAT718:137 - Saved CAT718 terminalEvent for terminalId 00001
+2014-12-23 15:32:38,272 INFO  org.apache.mina.core.service.IoHandlerAdapter.sessionClosed:37 - session closed: (0x00000001: nio socket, server, /127.0.0.1:52779 => 0.0.0.0/0.0.0.0:7001)

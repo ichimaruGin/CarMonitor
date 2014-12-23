@@ -6,6 +6,8 @@ CarMonitor
 **/
 新部署方法：
 1.从github上clone源码: git clone git@github.com:yijiezhen/CarMonitor.git（太慢就采用http协议）
+++++++
+2014/12/23  从自己的repos clone   git clone git@github.com:ichimaruGin/CarMonitor.git
 
 2.首先找到CarMonitorCore/db/latest.sql，使用下面的语句代替原来的新增User，授权操作
 #grant all privileges on `car_monitor_db`.* to `car_db_user`@`localhost` identified by 'password';
@@ -25,4 +27,9 @@ rm -rf CarMonitor;
 unzip CarMonitor.war -d CarMonitor;即可
 
 http://115.239.182.18:9090/CarMonitor/
+
+++++++
+2014/12/23
+默认的协议中不能用16进制数据，而是用Long的字符串来代替，再用Long.parse(String s)转换
+已在EventProcessor类中用Long.parse(String s，int redix)替代
 

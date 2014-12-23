@@ -49,7 +49,8 @@ public final class EventProcessor {
     private static Long strToLongValue(String value) {
         if (value == null || value.length() == 0)
             return null;
-        return Long.parseLong(value);
+        return Long.parseLong(value,16);
+        //return Long.parseLong(value);  修改  程序无法解析16进制的A-F字符，故改之
     }
     
     private static String stripValue(String value) {

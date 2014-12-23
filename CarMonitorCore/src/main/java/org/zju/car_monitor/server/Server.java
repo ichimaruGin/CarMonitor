@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
  */
 public class Server {
     public static Logger logger = Logger.getLogger(Server.class);
-    public static final int port = 7001;
+    public static final int port = 6667;
 
     DbInsertThread insertThread = null;
 
